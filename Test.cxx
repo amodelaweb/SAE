@@ -12,6 +12,9 @@ const std::string reset("\033[0m");
 const std::string bold("\x1B[1m") ;
 const std::string white("\x1B[37m");
 const std::string underline("\x1B[4m");
+const std::string backgroundblue("\x1B[44m");
+const std::string backgroundblack("\x1B[49m");
+const std::string backgroundwhite("\x1B[47m");
 
 /* PROTOTIPO DE FUNCIONES */
 
@@ -62,7 +65,7 @@ int main(int argc, char const *argv[]) {
       /* CASO DE MOSTRAR EL HORARIO DE UN ESTUDIANTE */
       case 1400:
       if(archivo != "  "){
-        std::cout<<std::endl<<sae.horarioestud(archivo)<<std::endl;
+        std::cout<<std::endl<<sae.horarioestud(archivo)<<std::endl<<backgroundblack;
       }else{
         std::cout<<std::endl<<"\t Ingrese un id valido \n" ;
       }
@@ -91,7 +94,7 @@ int main(int argc, char const *argv[]) {
       /* CASO DE FINALIZAR PROGRAMA */
       case 539:
       a = false ;
-      std::cout<<std::endl<<underline<<green<<"\t                                                           " ;
+      std::cout<<std::endl<<underline<<green<<"\t                                                         " ;
       std::cout<<std::endl<<underline<<green<<"\t ========= Muchas Gracias por usar el programa ========= \n" ;
       std::cout<<reset<<std::endl<<bold<<magenta  ;
 

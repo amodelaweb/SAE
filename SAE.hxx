@@ -209,7 +209,7 @@ Departamento* SAE::VerificarDept2(std::string idorg){
       itaux = it ;
     }
   }
-  // AQUI ESTOY 
+  // AQUI ESTOY
   if(!esta){
     return nullptr ;
   }else{
@@ -327,7 +327,7 @@ std::string SAE::horarioestud(std::string idestud){
     if(tieneclase){
       std::cout<<std::endl;
       std::cout<<std::endl;
-      std::cout<<bold1<<green1<<underline1<<"\n \t  Lunes    Martes    Miercoles    Jueves    Viernes    Sabado    Domingo \n"<<reset1;
+      std::cout<<bold1<<green1<<"\n \t  Lunes    Martes    Miercoles    Jueves    Viernes    Sabado    Domingo \n"<<reset1;
       std::cout<<std::endl<<bold1<<green1<<" \t                                                                           "<<reset1<<std::endl;
       for(int i=0 ; i<17 ; i++){
         for(int j=0 ; j<8 ; j++){

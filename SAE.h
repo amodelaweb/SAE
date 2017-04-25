@@ -22,6 +22,8 @@ const std::string reset1("\033[0m");
 const std::string bold1("\x1B[1m") ;
 const std::string white1("\x1B[37m");
 const std::string underline1("\x1B[4m");
+const std::string backgroundblack1("\x1B[49m");
+const std::string backgroundwhite1("\x1B[47m");
 
 struct comparatorAsign{
   bool operator()(Asignatura* a1 , Asignatura* a2)const{
