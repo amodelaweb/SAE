@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include "TadArchivo.h"
+
 //===================================================
 const std::string red("\x1B[31m");
 const std::string blue("\x1B[34m") ;
