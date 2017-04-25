@@ -82,10 +82,26 @@ int main(int argc, char const *argv[]) {
       break ;
       case 1267:
       /* PROY_DEMANDA */
-      if(prerreq)
-      sae.DemandaAsign("1130", archivo);
-      else
-      std::cout<<"\n \t ===== PRIMERO LLENE LA INFORMACION DE PRE REQUISITOS =====" ;
+      if(prerreq){
+        int demandaasign = sae.DemandaAsign(sae.ultimoSemestre(), archivo);
+        if(demandaasign != -1 && demandaasign!= -2 && demandaasign!= 0 ){
+          std::cout<<bold<<red<<"\n Demanda basados en el semestre "<<sae.ultimoSemestre()<<white ;
+          std::cout<<"\n *) La demanda para la Asignatura "<<archivo<<" es de : "<<demandaasign<<" estudiantes."<<std::endl ;
+        }else{
+          if(demandaasign == -1){
+            std::cout<<"\n La asignatura no esta registrada en el sistema ! "<<std::endl;
+          }
+          if(demandaasign== -2){
+            std::cout<<std::endl<<" El semestre no existe ! " ;
+          }
+          if(demandaasign == 0){
+            std::cout<<"\n La asignatura no tiene prerrequsitos registrados !"<<std::endl ;
+          }
+        }
+      }
+      else{
+        std::cout<<"\n \t ===== PRIMERO LLENE LA INFORMACION DE PRE REQUISITOS =====" ;
+      }
       break ;
       /* PROYECTAR SEMESTRES */
       case 1540:

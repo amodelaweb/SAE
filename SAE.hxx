@@ -45,7 +45,7 @@ std::string SAE::RealizarClaseAsign(std::vector<std::string> vector1){
 
       if(((VerificarDept(vector1[3])->VerificarAsignatura(vector1[5]))->VerificarClase(vector1[7])) == nullptr){
         VerificarDept(vector1[3])->VerificarAsignatura(vector1[5])->AgregarClase(vector1[7] , atoi(vector1[8].c_str()), vector1[11] , vector1[12] , vector1[23] , vector1[22] , vector1[29] , atoi(vector1[26].c_str()) ,vector1[28] , vector1[6] , vector1[0]);
-        }
+      }
       if(((VerificarDept(vector1[3])->VerificarAsignatura(vector1[5]))->VerificarClase(vector1[7])) != nullptr){
         int y = 7  ;
 
@@ -489,28 +489,44 @@ Asignatura* SAE::VerificarAsignaturas(std::string idasign){
   return aux ;
 }
 /*=============================================================================================================================*/
-bool SAE::DemandaAsign(std::string semestre  , std::string idasign){
+int SAE::DemandaAsign(std::string semestre  , std::string idasign){
   if(this->VerificarSemestre(semestre) != nullptr){
     if(this->VerificarAsignaturas(idasign) != nullptr){
-      std::pair <std::multimap<Asignatura* , Asignatura* >::iterator, std::multimap<Asignatura* ,Asignatura* >::iterator> ret;
-      ret = this->prerequisitos.equal_range(this->VerificarAsignaturas(idasign));
-      int cont = 0 ;
-      for (std::multimap<Asignatura* , Asignatura* >::iterator it=ret.first; it!=ret.second; ++it){
-        std::list<Clase*> lista1 = it->second->GetListaClases() ;
-        for(std::list<Clase*>::iterator ite  = lista1.begin() ; ite != lista1.end() ; ite++ ){
-          if((*ite)->GetCicloElctivo() == semestre){
-            cont+=atoi((*ite)->GetTotalInscritos().c_str() )  ;
+      if(this->prerequisitos.find( this->VerificarAsignaturas(idasign)) != this->prerequisitos.end()){
+        std::pair <std::multimap<Asignatura* , Asignatura* >::iterator, std::multimap<Asignatura* ,Asignatura* >::iterator> ret;
+        ret = this->prerequisitos.equal_range(this->VerificarAsignaturas(idasign));
+        int cont = 0 ;
+        for (std::multimap<Asignatura* , Asignatura* >::iterator it=ret.first; it!=ret.second; ++it){
+          std::list<Clase*> lista1 = it->second->GetListaClases() ;
+          for(std::list<Clase*>::iterator ite  = lista1.begin() ; ite != lista1.end() ; ite++ ){
+            if((*ite)->GetCicloElctivo() == semestre){
+              cont+=atoi((*ite)->GetTotalInscritos().c_str() )  ;
+            }
           }
         }
+        return cont ;
+      }else{
+        return 0 ;
       }
-      std::cout<<"\n Demanda : "<<cont<<" " ;
-      return true ;
     }else{
-      return false ;
+      return (-1) ;
     }
   }else{
-    return false ;
+    return (-2) ;
   }
 }
 /*=============================================================================================================================*/
+std::string SAE::ultimoSemestre(){
+  int maximo = 0 ;
+  std::string maximo2  ;
+  for(std::list<Semestre*>::iterator it = this->listaSemestres.begin() ; it != this->listaSemestres.end() ; it++){
+    if(atoi((*it)->GetCicloElctivo().c_str()) > maximo){
+      maximo = atoi((*it)->GetCicloElctivo().c_str()) ;
+      maximo2 = (*it)->GetCicloElctivo();
+    }
+  }
+  return maximo2 ;
+}
+/*=============================================================================================================================*/
+
 #endif

@@ -54,7 +54,8 @@ public:
   std::string siguientehora(std::string hora);
   bool AgregarTupla(std::string id1 , std::string id2);
   Asignatura* VerificarAsignaturas(std::string idasign);
-  bool DemandaAsign(std::string semestre  , std::string idasign);
+  int DemandaAsign(std::string semestre  , std::string idasign);
+  std::string ultimoSemestre();
 protected:
   std::list<Semestre*> listaSemestres ;
   std::list<Departamento*> departamentos ;
