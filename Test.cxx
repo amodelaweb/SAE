@@ -91,15 +91,39 @@ int main(int argc, char const *argv[]) {
       /* CASO DE FINALIZAR PROGRAMA */
       case 539:
       a = false ;
-      std::cout<<std::endl<<underline<<"\t ========= Muchas Gracias por usar el programa ========= \n" ;
-      std::cout<<reset   ;
+      std::cout<<std::endl<<underline<<green<<"\t                                                           " ;
+      std::cout<<std::endl<<underline<<green<<"\t ========= Muchas Gracias por usar el programa ========= \n" ;
+      std::cout<<reset<<std::endl<<bold<<magenta  ;
+
+
+      std::cout<<std::endl<<"\t                      ..:::::::::..";
+      std::cout<<std::endl<<"\t                  ..:::aad8888888baa:::..";
+      std::cout<<std::endl<<"\t              .::::d:?88888888888?::8b::::.";
+      std::cout<<std::endl<<"\t            .:::d8888:?88888888??a888888b:::.";
+      std::cout<<std::endl<<"\t          .:::d8888888a8888888aa8888888888b:::.";
+      std::cout<<std::endl<<"\t         ::::dP::::::::88888888888::::::::Yb::::";
+      std::cout<<std::endl<<"\t        ::::dP:::::::::Y888888888P:::::::::Yb::::";
+      std::cout<<std::endl<<"\t      :::::Y8baaaaaaaaaa88P:T:Y88aaaaaaaaaad8P:::::";
+      std::cout<<std::endl<<"\t      :::::::Y88888888888P::|::Y88888888888P:::::::";
+      std::cout<<std::endl<<"\t      ::::::::::::::::888:::|:::888::::::::::::::::";
+      std::cout<<std::endl<<"\t      `:::::::::::::::8888888888888b::::::::::::::'";
+      std::cout<<std::endl<<"\t       :::::::::::::::88888888888888::::::::::::::";
+      std::cout<<std::endl<<"\t        :::::::::::::d88888888888888:::::::::::::";
+      std::cout<<std::endl<<"\t         ::::::::::::88::88::88:::88::::::::::::";
+      std::cout<<std::endl<<"\t          `::::::::::88::88::88:::88::::::::::'";
+      std::cout<<std::endl<<"\t            `::::::::88::88::P::::88::::::::'";
+      std::cout<<std::endl<<"\t              `::::::88::88:::::::88::::::'";
+      std::cout<<std::endl<<"\t                 ``:::::::::::::::::::''";
+      std::cout<<std::endl<<"\t                      ``:::::::::''";
+      std::cout<<std::endl<<""<<reset<<std::endl;
+
       break ;
       /* CASO DE INSTRUCTIVO */
       case 532:
       std::cout<<std::endl<<underline<<bold<<red<<"\t ========= INSTRUCCIONES ========= \n" <<reset<<bold<<white;
       if (archivo == "salir"){
         std::cout<<"\n\t*comando: salir\n";
-        std::cout<<bold<<blue"\n\tPosibles salidas en pantalla: \n"<<white;
+        std::cout<<bold<<blue<<"\n\tPosibles salidas en pantalla: \n"<<white;
         std::cout<<"\n\t-(No tiene salida por pantalla)\n";
         std::cout<<"\n\tDescripcion: Termina la ejecucion de la aplicacion.\n";
       }	else if (archivo == "cargar_info_asign"){
@@ -114,7 +138,7 @@ int main(int argc, char const *argv[]) {
       }
       else if (archivo == "cargar_info_estud"){
         std::cout<<"\n\t*comando: ccargar_info_estud\n";
-        std::cout<<bold<<blue"\n\tPosibles salidas en pantalla: \n"<<white;
+        std::cout<<bold<<blue<<"\n\tPosibles salidas en pantalla: \n"<<white;
         std::cout<<"\n\t-(Semestre ya inicializado): Informaci�n de inscripciones de estudiantes para el semestre IDsem ya ha sido cargada.\n";
         std::cout<<"\n\t-(Semestre no coincide): Semestre IDsem no coincide con los datos de asignaturas y clases ya cargados.\n";
         std::cout<<"\n\t(Archivo no existe): El archivo listaClasesInscritasEstud-IDsem.csv no existe o es ilegible. \n";
