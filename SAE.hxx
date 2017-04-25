@@ -209,6 +209,7 @@ Departamento* SAE::VerificarDept2(std::string idorg){
       itaux = it ;
     }
   }
+  // AQUI ESTOY 
   if(!esta){
     return nullptr ;
   }else{
