@@ -38,12 +38,12 @@ int main(int argc, char const *argv[]) {
   bool a = true ;
   bool prerreq = false ;
 
-std::cout<<cyan<<bold<<std::endl<<"\t  ███████╗ █████╗ ███████╗";
-std::cout<<std::endl<<"\t  ██╔════╝██╔══██╗██╔════╝";
-std::cout<<std::endl<<"\t  ███████╗███████║█████╗  ";
-std::cout<<std::endl<<"\t  ╚════██║██╔══██║██╔══╝  ";
-std::cout<<std::endl<<"\t  ███████║██║  ██║███████╗";
-std::cout<<std::endl<<"\t  ╚══════╝╚═╝  ╚═╝╚══════╝"<<std::endl;
+std::cout<<cyan<<bold<<std::endl<<"\t\t  ███████╗ █████╗ ███████╗";
+std::cout<<std::endl<<"\t\t  ██╔════╝██╔══██╗██╔════╝";
+std::cout<<std::endl<<"\t\t  ███████╗███████║█████╗  ";
+std::cout<<std::endl<<"\t\t  ╚════██║██╔══██║██╔══╝  ";
+std::cout<<std::endl<<"\t\t  ███████║██║  ██║███████╗";
+std::cout<<std::endl<<"\t\t  ╚══════╝╚═╝  ╚═╝╚══════╝"<<std::endl;
 
   do{
     std::cout<<std::endl<<blue<<bold<<underline<<user_name<<yellow<<" $ "<<reset<<green<<"" ;
