@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include "TadArchivo.h"
-
+//===================================================
 const std::string red("\x1B[31m");
 const std::string blue("\x1B[34m") ;
 const std::string green("\033[1;32m");
@@ -15,6 +15,7 @@ const std::string underline("\x1B[4m");
 const std::string backgroundblue("\x1B[44m");
 const std::string backgroundblack("\x1B[49m");
 const std::string backgroundwhite("\x1B[47m");
+//===================================================
 
 /* PROTOTIPO DE FUNCIONES */
 
