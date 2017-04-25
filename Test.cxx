@@ -225,6 +225,8 @@ int main(int argc, char const *argv[]) {
         std::cout<<"\n\t*comando: salir\n";
       }
       break ;
+      case 0:
+      break ;
       default :
       std::cout<<std::endl<<"Informacion : "<<comando<<" No existe , por favor tipee ayuda para obtener informacion \n" ;
       std::cout<<std::endl<<"VALOR NUMERICO : "<<str2int(comando);
