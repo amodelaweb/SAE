@@ -10,6 +10,7 @@
 #include <string>
 #include <list>
 #include <vector>
+#include <set>
 #include <map>
 
 const std::string red1("\x1B[31m");
@@ -56,6 +57,8 @@ public:
   Asignatura* VerificarAsignaturas(std::string idasign);
   int DemandaAsign(std::string semestre  , std::string idasign);
   std::string ultimoSemestre();
+  void Demandaestud(std::string idestud);
+  std::string siguienteSemestre(std::string& semestre) ;
 protected:
   std::list<Semestre*> listaSemestres ;
   std::list<Departamento*> departamentos ;

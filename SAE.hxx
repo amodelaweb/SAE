@@ -496,6 +496,10 @@ int SAE::DemandaAsign(std::string semestre  , std::string idasign){
         std::pair <std::multimap<Asignatura* , Asignatura* >::iterator, std::multimap<Asignatura* ,Asignatura* >::iterator> ret;
         ret = this->prerequisitos.equal_range(this->VerificarAsignaturas(idasign));
         int cont = 0 ;
+        std::vector<int> vectordecanti ;
+        std::set<Asignatura* , comparatorAsign> aux2 ;
+        std::set<Asignatura* , comparatorAsign> aux3 ;
+
         for (std::multimap<Asignatura* , Asignatura* >::iterator it=ret.first; it!=ret.second; ++it){
           std::list<Clase*> lista1 = it->second->GetListaClases() ;
           for(std::list<Clase*>::iterator ite  = lista1.begin() ; ite != lista1.end() ; ite++ ){
@@ -503,8 +507,34 @@ int SAE::DemandaAsign(std::string semestre  , std::string idasign){
               cont+=atoi((*ite)->GetTotalInscritos().c_str() )  ;
             }
           }
+          aux2.insert(it->second);
         }
-        return cont ;
+        vectordecanti.push_back(cont);
+        while(!aux2.empty()){
+          cont = 0 ;
+          aux3.clear() ;
+          for(std::set<Asignatura*>::iterator it2= aux2.begin(); it2!=aux2.end(); ++it2){
+            ret = this->prerequisitos.equal_range(*it2);
+            for (std::multimap<Asignatura* , Asignatura* >::iterator it=ret.first; it!=ret.second; ++it){
+              std::list<Clase*> lista2 = it->second->GetListaClases() ;
+              for(std::list<Clase*>::iterator ite  = lista2.begin() ; ite != lista2.end() ; ite++ ){
+                if((*ite)->GetCicloElctivo() == semestre){
+                  cont+=atoi((*ite)->GetTotalInscritos().c_str() )  ;
+                }
+              }
+              aux3.insert(it->second);
+            }
+          }
+          if (cont > 0 ){
+            vectordecanti.push_back(cont);
+          }
+          aux2.swap(aux3);
+        }
+        for(int i = 0 ; i < vectordecanti.size() ; i++){
+          std::cout<<"\n *) Demanda para semestre "<<semestre<<" es de "<<vectordecanti[i]<<" estudiantes." ;
+          semestre = this->siguienteSemestre(semestre) ;
+        }
+        return 1 ;
       }else{
         return 0 ;
       }
@@ -526,6 +556,41 @@ std::string SAE::ultimoSemestre(){
     }
   }
   return maximo2 ;
+}
+/*=============================================================================================================================*/
+void SAE::Demandaestud(std::string idestud){
+  for(std::list<Semestre*>::iterator it = this->listaSemestres.begin() ; it != this->listaSemestres.end() ; it++){
+    if((*it)->VerificarEstudiante2(idestud) != nullptr){
+
+    }
+  }
+
+}
+/*=============================================================================================================================*/
+std::string SAE::siguienteSemestre(std::string& semestre){
+  std::string temp = "" ;
+  std::string temp2 = "" ;
+  std::string temp3 = "" ;
+  int i ;
+  for(i=0 ; i  < (semestre.size() - 2) ; i++){
+    temp += semestre[i] ;
+  }
+  for(int j = (i) ; j < semestre.size() ; j++){
+    temp2 += semestre[j] ;
+  }
+  int a = atoi(temp2.c_str()) ;
+  if( a <= 20){
+    a += 10 ;
+    temp3 += temp;
+    temp3 += std::to_string(a);
+  }else{
+    int b = atoi(temp.c_str()) ;
+    b+= 1 ;
+    a = 10 ;
+    temp3 += std::to_string(b) ;
+    temp3 += std::to_string(a) ;
+  }
+  return temp3 ;
 }
 /*=============================================================================================================================*/
 

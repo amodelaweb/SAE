@@ -94,11 +94,10 @@ std::cout<<std::endl<<"\t\t  ╚══════╝╚═╝  ╚═╝╚═�
       if(prerreq){
         int demandaasign = sae.DemandaAsign(sae.ultimoSemestre(), archivo);
         if(demandaasign != -1 && demandaasign!= -2 && demandaasign!= 0 ){
-          std::cout<<bold<<red<<"\n Demanda basados en el semestre "<<sae.ultimoSemestre()<<white ;
-          std::cout<<"\n *) La demanda para la Asignatura "<<archivo<<" es de : "<<demandaasign<<" estudiantes."<<std::endl ;
+          std::cout<<bold<<red<<"\n Demanda basados en el semestre "<<sae.ultimoSemestre()<<white<<" \n " ;
         }else{
           if(demandaasign == -1){
-            std::cout<<"\n La asignatura no esta registrada en el sistema ! "<<std::endl;
+            std::cout<<"\n \n La asignatura no esta registrada en el sistema ! "<<std::endl;
           }
           if(demandaasign== -2){
             std::cout<<std::endl<<" El semestre no existe ! " ;
