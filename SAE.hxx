@@ -531,8 +531,8 @@ int SAE::DemandaAsign(std::string semestre  , std::string idasign){
           aux2.swap(aux3);
         }
         for(int i = 0 ; i < vectordecanti.size() ; i++){
-          std::cout<<"\n *) Demanda para semestre "<<semestre<<" es de "<<vectordecanti[i]<<" estudiantes." ;
           semestre = this->siguienteSemestre(semestre) ;
+          std::cout<<"\n *) Demanda para semestre "<<semestre<<" es de "<<vectordecanti[i]<<" estudiantes." ;
         }
         return 1 ;
       }else{
