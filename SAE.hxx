@@ -44,7 +44,7 @@ std::string SAE::RealizarClaseAsign(std::vector<std::string> vector1){
     if(VerificarDept(vector1[3])->VerificarAsignatura(vector1[5]) != nullptr){
 
       if(((VerificarDept(vector1[3])->VerificarAsignatura(vector1[5]))->VerificarClase(vector1[7])) == nullptr){
-        VerificarDept(vector1[3])->VerificarAsignatura(vector1[5])->AgregarClase(vector1[7] , atoi(vector1[8].c_str()), vector1[11] , vector1[12] , vector1[23] , vector1[22] , vector1[29] , atoi(vector1[26].c_str()) ,vector1[28] , vector1[6] , vector1[0]);
+        VerificarDept(vector1[3])->VerificarAsignatura(vector1[5])->AgregarClase(vector1[7] , atoi(vector1[8].c_str()), vector1[11] , vector1[12] , vector1[23] , vector1[22] , vector1[29] , atoi(vector1[26].c_str()) ,vector1[28] , vector1[6] , vector1[0] , vector1[5]);
       }
       if(((VerificarDept(vector1[3])->VerificarAsignatura(vector1[5]))->VerificarClase(vector1[7])) != nullptr){
         int y = 7  ;
@@ -224,11 +224,15 @@ std::string SAE::horarioestud(std::string idestud){
   std::string horitafin = "";
 
   std::list<Semestre*>::iterator it = this->listaSemestres.begin();
-  std::string matrizconf [17][8] ;
-
+  std::string **matrizconf ;
+  matrizconf = new std::string * [17] ;
+  for(int zz= 0 ; zz<17 ; zz++){
+    matrizconf[zz] = new std::string[8] ;
+  }
   bool unavez = false ;
+  tieneclase = false ;
   for(;it != this->listaSemestres.end() ; it++){
-    tieneclase = false ;
+
     std::list<std::string> infoimp ;
     std::list<std::string> infonom ;
     std::list<std::string> salon ;
@@ -370,6 +374,11 @@ std::string SAE::horarioestud(std::string idestud){
     std::cout<<std::endl<<white1  ;
     std::cout<<std::endl;
   }
+
+  for(int nn = 0 ; nn < 17 ; nn++){
+    delete[] matrizconf[nn] ;
+  }
+
   if(!unavez){
     return "\n \t=== El estudiante no tiene ninguna informacion registrada/No existe ===";
   }
@@ -559,9 +568,16 @@ std::string SAE::ultimoSemestre(){
 }
 /*=============================================================================================================================*/
 void SAE::Demandaestud(std::string idestud){
+  std::set<Asignatura *  , comparatorAsign > primerasasign;
   for(std::list<Semestre*>::iterator it = this->listaSemestres.begin() ; it != this->listaSemestres.end() ; it++){
     if((*it)->VerificarEstudiante2(idestud) != nullptr){
+      std::list<ClaseXestudiante*> aux  =  (*it)->VerificarEstudiante2(idestud)->GetClases() ;
+      for(std::list<ClaseXestudiante*>::iterator ite = aux.begin() ; ite != aux.end() ;  ite++){
+        if(!esprerrequisito(this->VerificarAsignaturas((*ite)->Getclase()->Getidasig() ), primerasasign)) {
+          primerasasign.insert(this->VerificarAsignaturas((*ite)->Getclase()->Getidasig() )) ;
+        }
 
+      }
     }
   }
 
@@ -591,6 +607,32 @@ std::string SAE::siguienteSemestre(std::string& semestre){
     temp3 += std::to_string(a) ;
   }
   return temp3 ;
+}
+/*=============================================================================================================================*/
+bool SAE::verificarsiesPrerrequisito(Asignatura* asign1 , Asignatura* asign2) {
+  bool es = false ;
+  std::pair <std::multimap<Asignatura* , Asignatura* >::iterator, std::multimap<Asignatura* ,Asignatura* >::iterator> ret;
+  ret = this->prerequisitos.equal_range(asign1);
+  for (std::multimap<Asignatura* , Asignatura* >::iterator it=ret.first; it!=ret.second && !es; ++it){
+    if(it->second == asign2){
+      es = true ;
+    }
+  }
+  return es ;
+}
+/*=============================================================================================================================*/
+bool SAE::esprerrequisito(Asignatura* asign , std::set<Asignatura* , comparatorAsign > &set1) {
+  bool ya = false ;
+
+  for(std::set<Asignatura*>::iterator it = set1.begin() ; it != set1.end() && !ya ; ++it){
+
+    if(this->verificarsiesPrerrequisito(*it , asign)){
+      ya = true ;
+    }
+
+  }
+
+  return ya ;
 }
 /*=============================================================================================================================*/
 

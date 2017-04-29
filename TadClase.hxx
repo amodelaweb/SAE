@@ -3,7 +3,7 @@
 #include "TadClase.h"
 
 /*=============================================================================================================================*/
-Clase::Clase(std::string nClase, int seccion , std::string EstadoClase , std::string EstadoInscripcion , std::string FFinal , std::string FInicial , std::string TotalInscritos , int aulasoli  , std::string Descrp , std::string nombreclas , std::string ciclolectivo)
+Clase::Clase(std::string nClase, int seccion , std::string EstadoClase , std::string EstadoInscripcion , std::string FFinal , std::string FInicial , std::string TotalInscritos , int aulasoli  , std::string Descrp , std::string nombreclas , std::string ciclolectivo  , std::string idasign)
 {
   this->nClase = nClase ;
   this->seccion = seccion ;
@@ -16,6 +16,7 @@ Clase::Clase(std::string nClase, int seccion , std::string EstadoClase , std::st
   this->Descrp = Descrp ;
   this->nombreclas = nombreclas ;
   this->ciclolectivo = ciclolectivo ;
+  this->idasign = idasign ;
 }
 /*=============================================================================================================================*/
 std::string Clase::GetnClase()
@@ -158,6 +159,11 @@ std::string Clase::Getnombreclas(){
 }
 /*=============================================================================================================================*/
 std::string Clase::GetCicloElctivo(){
-  return this->ciclolectivo ; 
+  return this->ciclolectivo ;
 }
+/*=============================================================================================================================*/
+std::string Clase::Getidasig() {
+  return this->idasign ; 
+}
+/*=============================================================================================================================*/
 #endif // __TAD_Sesion_H__

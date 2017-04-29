@@ -114,6 +114,7 @@ std::cout<<std::endl<<"\t\t  ╚══════╝╚═╝  ╚═╝╚═�
       /* PROYECTAR SEMESTRES */
       case 1540:
       /* PROY_SEMESTRES */
+      sae.Demandaestud(archivo);
       break ;
       /* CASO DE FINALIZAR PROGRAMA */
       case 539:

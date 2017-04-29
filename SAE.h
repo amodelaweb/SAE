@@ -59,6 +59,8 @@ public:
   std::string ultimoSemestre();
   void Demandaestud(std::string idestud);
   std::string siguienteSemestre(std::string& semestre) ;
+  bool verificarsiesPrerrequisito(Asignatura* asign , Asignatura* asign2) ;
+  bool esprerrequisito(Asignatura* asign , std::set<Asignatura* , comparatorAsign > &set1) ;
 protected:
   std::list<Semestre*> listaSemestres ;
   std::list<Departamento*> departamentos ;

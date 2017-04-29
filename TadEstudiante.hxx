@@ -33,7 +33,7 @@ std::list<ClaseXestudiante*> Estudiante::GetClases() {
 /*=============================================================================================================================*/
 bool Estudiante::verificarclasenota(Clase* clase) {
 	bool esta = false ;
-	for(std::list<ClaseXestudiante*>::iterator it = this->clases.begin() ; it != this->clases.end() ;it++){
+	for(std::list<ClaseXestudiante*>::iterator it = this->clases.begin() ; it != this->clases.end() && !esta ;it++){
 		if((*it)->Getclase() == clase){
 			esta = true ;
 		}

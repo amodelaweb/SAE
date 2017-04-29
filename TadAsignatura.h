@@ -18,9 +18,9 @@ public:
 	std::string GetNombreAsignatura();
 	void SetGrado(std::string Grado);
 	std::string GetGrado();
-	void AgregarClase(std::string nClase, int seccion , std::string EstadoClase , std::string EstadoInscripcion , std::string FFinal , std::string FInicial , std::string TotalInscritos , int aulasoli  , std::string Descrp , std::string nombreclas , std::string ciclolectivo);
+	void AgregarClase(std::string nClase, int seccion , std::string EstadoClase , std::string EstadoInscripcion , std::string FFinal , std::string FInicial , std::string TotalInscritos , int aulasoli  , std::string Descrp , std::string nombreclas , std::string ciclolectivo , std::string idasign);
 	Clase* VerificarClase(std::string nClase);
-	std::list<Clase*> GetListaClases() ; 
+	std::list<Clase*> GetListaClases() ;
 protected:
 	std::list <Clase*> listaclase;
 	std::string Idcurso;

@@ -10,11 +10,11 @@
 class Clase
 {
 public:
-	Clase(std::string nClase, int seccion , std::string EstadoClase , std::string EstadoInscripcion , std::string FFinal , std::string FInicial , std::string TotalInscritos , int aulasoli  , std::string Descrp , std::string nombreclas , std::string ciclolectivo);
+	Clase(std::string nClase, int seccion , std::string EstadoClase , std::string EstadoInscripcion , std::string FFinal , std::string FInicial , std::string TotalInscritos , int aulasoli  , std::string Descrp , std::string nombreclas , std::string ciclolectivo , std::string idasign);
 	~Clase()=default;
 	std::string GetnClase();
 	std::string GetEstadoClase();
-	std::string GetCicloElctivo() ; 
+	std::string GetCicloElctivo() ;
 	std::string GetEstadoInscripcion();
 	std::string GetFIncial();
 	std::string GetFFinal();
@@ -38,6 +38,7 @@ public:
 	void SetSeccion(int seccion) ;
 	void AgregarSesion(std::string HoraInicioClase,std::string Componenete , std::string HoraFinClase , std::string TipoSesion , std::string Dia , std::string Idaula );
 	Sesion* VerificarSesion(std::string Dia);
+	std::string Getidasig() ; 
 protected:
 	std::list<Sesion*> ListaSesion;
 	std::string ciclolectivo ;
@@ -52,6 +53,7 @@ protected:
 	std::string TotalInscritos;
 	std::string Descrp ;
 	std::string nombreclas ;
+	std::string idasign ;
 };
 
 #include "TadClase.hxx"

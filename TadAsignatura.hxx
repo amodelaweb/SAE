@@ -41,7 +41,7 @@ void Asignatura::SetGrado(std::string Grado)
 	this->Grado=Grado;
 }
 /*=============================================================================================================================*/
-void Asignatura::AgregarClase(std::string nClase, int seccion , std::string EstadoClase , std::string EstadoInscripcion , std::string FFinal , std::string FInicial , std::string TotalInscritos ,int aulasoli  , std::string Descrp , std::string nombreclas , std::string ciclolectivo){
+void Asignatura::AgregarClase(std::string nClase, int seccion , std::string EstadoClase , std::string EstadoInscripcion , std::string FFinal , std::string FInicial , std::string TotalInscritos ,int aulasoli  , std::string Descrp , std::string nombreclas , std::string ciclolectivo , std::string idasign){
 	bool b = false ;
 	for (std::list<Clase*>::iterator it = this->listaclase.begin() ; it != this->listaclase.end() ;it++	){
 		if((*it)->GetnClase() == nClase){
@@ -49,7 +49,7 @@ void Asignatura::AgregarClase(std::string nClase, int seccion , std::string Esta
 		}
 	}
 	if(!b){
-		this->listaclase.push_back(new Clase(nClase , seccion , EstadoClase , EstadoInscripcion , FFinal , FInicial , TotalInscritos , aulasoli ,Descrp , nombreclas , ciclolectivo)) ;
+		this->listaclase.push_back(new Clase(nClase , seccion , EstadoClase , EstadoInscripcion , FFinal , FInicial , TotalInscritos , aulasoli ,Descrp , nombreclas , ciclolectivo , idasign)) ;
 	}
 }
 /*=============================================================================================================================*/
@@ -79,6 +79,6 @@ Clase* Asignatura::VerificarClase(std::string nClase)
 }
 /*=============================================================================================================================*/
 std::list<Clase*> Asignatura::GetListaClases() {
- return this->listaclase; 
+ return this->listaclase;
 }
 #endif // __TAD_Asignatura_H__
