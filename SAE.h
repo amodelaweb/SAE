@@ -1,18 +1,20 @@
 #ifndef __TAD__SAE__H__
 #define __TAD__SAE__H__
-
+/*=============================================================================================================================*/
 #include "TadAula.h"
 #include "TadSemestre.h"
 #include "TadArchivo.h"
 #include "TadDepartamento.h"
 #include "TadAsignatura.h"
+#include "ArbolBinario.h"
 #include <iostream>
 #include <string>
 #include <list>
 #include <vector>
 #include <set>
 #include <map>
-
+#include <queue>
+/*=============================================================================================================================*/
 const std::string red1("\x1B[31m");
 const std::string blue1("\x1B[34m") ;
 const std::string green1("\033[1;32m");
@@ -26,12 +28,64 @@ const std::string underline1("\x1B[4m");
 const std::string backgroundblack1("\x1B[49m");
 const std::string backgroundwhite1("\x1B[47m");
 
+template <class t >
+class ArbolBinarioAVL;
+/*=============================================================================================================================*/
 struct comparatorAsign{
   bool operator()(Asignatura* a1 , Asignatura* a2)const{
     return a1->GetIdCurso() < a2->GetIdCurso();
   }
 };
+/*=============================================================================================================================*/
+class SemestrexAsignaturas{
+protected:
+  friend class SAE ;
+  std::string semestre ;
+  std::set<Asignatura* , comparatorAsign> asignaturas ;
+public:
+  SemestrexAsignaturas() ;
+  SemestrexAsignaturas(std::string semestre );
+  void Insertar(Asignatura* asignatura);
+  Asignatura* buscar(Asignatura* asignatura);
+  void setAsignaturas(std::set<Asignatura* , comparatorAsign> asignaturas) ;
+  friend bool operator == (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2);
+  friend bool operator <  (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2);
+  friend bool operator >  (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2);
+  friend bool operator >= (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2);
+  friend bool operator <= (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2);
+  friend bool operator != (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2);
 
+  friend std::ostream& operator << (std::ostream &o, const SemestrexAsignaturas t1);
+
+
+};
+
+
+bool operator == (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2){
+  return t1.semestre == t2.semestre ;
+}
+bool operator <  (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2){
+  return t1.semestre < t2.semestre  ;
+}
+bool operator >  (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2){
+  return t1.semestre > t2.semestre   ;
+}
+bool operator >= (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2){
+  return t1.semestre >= t2.semestre   ;
+}
+bool operator <= (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2){
+  return t1.semestre <= t2.semestre  ;
+}
+bool operator != (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2){
+  return t1.semestre != t2.semestre   ;
+}
+
+std::ostream& operator << (std::ostream &o, const SemestrexAsignaturas t1){
+  o  << t1.semestre ;
+  return o;
+}
+
+/*=============================================================================================================================*/
 class SAE
 {
 public:
@@ -61,6 +115,8 @@ public:
   std::string siguienteSemestre(std::string& semestre) ;
   bool verificarsiesPrerrequisito(Asignatura* asign , Asignatura* asign2) ;
   bool esprerrequisito(Asignatura* asign , std::set<Asignatura* , comparatorAsign > &set1) ;
+  void eliminarInnecesarios(std::set<Asignatura* , comparatorAsign>& siguientes, ArbolBinarioAVL<SemestrexAsignaturas> &arbol  );
+  bool estanPrerreq(Asignatura* asign , ArbolBinarioAVL<SemestrexAsignaturas> &arbol) ;
 protected:
   std::list<Semestre*> listaSemestres ;
   std::list<Departamento*> departamentos ;
