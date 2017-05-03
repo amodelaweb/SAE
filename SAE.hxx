@@ -77,21 +77,30 @@ bool SAE::RealizarEstuclase(std::vector<std::string> vector1){
     if( VerificarSemestre(vector1[0]) == nullptr && vector1[0] != " " && vector1[0] != ""){
       this->listaSemestres.push_back(new Semestre(vector1[0])) ;
     }
-    if( !VerificarSemestre(vector1[0])->VerificarEstudiante(vector1[2]) ){
-      VerificarSemestre(vector1[0])->AgregarEstudiante(vector1[2] , vector1[4].erase(vector1[4].size()-1 , vector1[4].size())  ,vector1[3].erase(0,1) , vector1[5] , vector1[6] , vector1[7] , vector1[9]  , vector1[1]) ;
+    std::string idstud  = vector1[2] ;
+    while(idstud[0] == '0'){
+      idstud.erase(0,1);
     }
-    if(VerificarSemestre(vector1[0])->VerificarEstudiante2(vector1[2]) != nullptr){
+    while(vector1[10][0] == '0'){
+      vector1[10].erase(0,1);
+    }
+
+    if( !VerificarSemestre(vector1[0])->VerificarEstudiante(idstud) ){
+
+      VerificarSemestre(vector1[0])->AgregarEstudiante(idstud , vector1[4] ,vector1[3].erase(0,1) , vector1[5] , vector1[6] , vector1[7] , vector1[9]  , vector1[1]) ;
+    }
+    if(VerificarSemestre(vector1[0])->VerificarEstudiante2(idstud) != nullptr){
 
       if(VerificarDept2(vector1[15]) != nullptr){
         if(VerificarDept2(vector1[15])->VerificarAsignatura(vector1[10]) != nullptr){
           if(VerificarDept2(vector1[15])->VerificarAsignatura(vector1[10])->VerificarClase(vector1[11]) != nullptr)
           {
-            if( !VerificarSemestre(vector1[0])->VerificarEstudiante2(vector1[2])->verificarclasenota(VerificarDept2(vector1[15])->VerificarAsignatura(vector1[10])->VerificarClase(vector1[11]))){
+            if( !VerificarSemestre(vector1[0])->VerificarEstudiante2(idstud)->verificarclasenota(VerificarDept2(vector1[15])->VerificarAsignatura(vector1[10])->VerificarClase(vector1[11]))){
               std::string dasd = vector1[18] ;
               if(vector1[18] == " " || vector1[18] == ""){
                 dasd = "0" ;
               }
-              VerificarSemestre(vector1[0])->VerificarEstudiante2(vector1[2])->AgregarClasenotas(VerificarDept2(vector1[15])->VerificarAsignatura(vector1[10])->VerificarClase(vector1[11]), std::stof(dasd.c_str()) , vector1[20] , atoi(vector1[17].c_str()),vector1[19] , vector1[21] , vector1[22 ] ) ;
+              VerificarSemestre(vector1[0])->VerificarEstudiante2(idstud)->AgregarClasenotas(VerificarDept2(vector1[15])->VerificarAsignatura(vector1[10])->VerificarClase(vector1[11]), std::stof(dasd.c_str()) , vector1[20] , atoi(vector1[17].c_str()),vector1[19] , vector1[21] , vector1[22 ] ) ;
             }
             return true ;
 
@@ -581,89 +590,117 @@ void SAE::Demandaestud(std::string idestud ){
   for (std::multimap<Asignatura*,Asignatura*>::iterator it = this->prerequisitos.begin(); it != this->prerequisitos.end(); ++it){
     mapreverse.insert(std::pair<  Asignatura* , Asignatura* >(it->second ,it->first) ) ;
   }
-  std::cout<<"\n PASO 1 ";
-  ArbolBinarioAVL<SemestrexAsignaturas> arbolestud;
-  SemestrexAsignaturas* auxsem = new SemestrexAsignaturas(semestreactual) ;
-  auxsem->setAsignaturas(primerasasign);
-  arbolestud.insertar(*auxsem) ;
-  std::set<Asignatura* , comparatorAsign> tempxa ;
-  ArbolBinarioAVL<SemestrexAsignaturas>::iterator itaux ;
+
   std::pair <std::multimap<Asignatura* , Asignatura* >::iterator, std::multimap<Asignatura* ,Asignatura* >::iterator> ret;
-  std::set<Asignatura*> temptotal ;
-  int i = 0 ;
-  std::cout<<"\n PASO  ";
-  for(ArbolBinarioAVL<SemestrexAsignaturas>::iterator it = arbolestud.begin() ; it != arbolestud.end() ; it++){
-    for(std::set<Asignatura*>::iterator ite = (*it).asignaturas.begin() ; ite != (*it).asignaturas.end() ; ite++){
-      std::cout<<"\n PASO 3";
-      ret = mapreverse.equal_range(*ite);
-      std::cout<<"\n PASO 4";
-      for (std::multimap<Asignatura* , Asignatura* >::iterator rit =ret.first; rit!=ret.second ; ++rit){
-        std::cout<<"\n PASO 5";
-        tempxa.insert(rit->second);
-      }
-      std::cout<<"\n PASO 6 ";
-      this->eliminarInnecesarios(tempxa , arbolestud);
-      std::cout<<"\n PASO 7  ";
-      for(std::set<Asignatura*>::iterator sit = tempxa.begin() ; sit != tempxa.end() ; sit++){
-        std::cout<<"\n PASO 8  ";
-        std::cout<<"\n PASO 8  ";
-        std::cout<<"\n PASO 8  ";
-        if(this->estanPrerreq(*sit , arbolestud)){
-          std::cout<<"\n PASO 9  ";
-          std::cout<<"\n PASO 9  ";
-          std::cout<<"\n PASO 9  ";
-          std::cout<<"\n PASO 9  ";
-          itaux = it  ;
-          itaux++ ;
-          std::cout<<"\n PASO 10  ";
-          std::cout<<"\n PASO 10  ";
-          std::cout<<"\n PASO 10  ";
-          if(itaux != arbolestud.end()){
-            (*itaux).asignaturas.insert(*sit);
-          }else{
-            std::cout<<"\n PASO 10.5  ";
-            auxsem = new SemestrexAsignaturas(this->siguienteSemestre(semestreactual));
-            auxsem->asignaturas.insert(*sit);
-            arbolestud.insertar(*auxsem) ;
-          }
-        }else{
-          std::cout<<"\n PASO 10.8  ";
-          temptotal.insert(*sit);
+  std::vector<std::set<Asignatura* , comparatorAsign> > temp  ;
+  std::set<Asignatura* , comparatorAsign> miniset ;
+  temp.push_back(primerasasign) ;
+
+  for(  int zz = 0 ; zz < temp.size() ; zz++){
+
+    for(std::set<Asignatura*>::iterator itq = temp[zz].begin() ; itq != temp[zz].end() ; itq++){
+      std::pair <std::multimap<Asignatura* , Asignatura*  , comparatorAsign>::iterator, std::multimap<Asignatura* ,Asignatura*  , comparatorAsign>::iterator> ret =  mapreverse.equal_range(*itq) ;
+      for (std::multimap<Asignatura* , Asignatura* , comparatorAsign >::iterator rit =ret.first; rit!=ret.second ; ++rit){
+        if(!estaposmateria(temp ,rit->second )){
+          miniset.insert(rit->second);
+
         }
       }
-      tempxa.clear();
-      std::cout<<"\n PASO 11  ";
-      std::cout<<"\n PASO 11  ";
-      std::cout<<"\n PASO 11  ";
-      for(std::set<Asignatura*>::iterator ittemp = temptotal.begin() ; ittemp != temptotal.end() ; ittemp++){
-        ret = mapreverse.equal_range(*ittemp);
-        for (std::multimap<Asignatura* , Asignatura* >::iterator ritemp =ret.first; ritemp!=ret.second ; ++ritemp){
-          tempxa.insert(ritemp->second);
-        }
-        this->eliminarInnecesarios(tempxa , arbolestud);
-        for(std::set<Asignatura*>::iterator sit = tempxa.begin() ; sit != tempxa.end() ; sit++){
-          if(this->estanPrerreq(*sit , arbolestud)){
-            itaux = it  ;
-            itaux++ ;
-            if(itaux != arbolestud.end()){
-              (*itaux).asignaturas.insert(*sit);
-            }else{
-              auxsem = new SemestrexAsignaturas(this->siguienteSemestre(semestreactual));
-              auxsem->asignaturas.insert(*sit);
-              arbolestud.insertar(*auxsem) ;
-            }
-          }
-        }
-        tempxa.clear() ;
-      }
-      tempxa.clear();
     }
-    semestreactual = this->siguienteSemestre(semestreactual);
-    std::cout<<"\n ---> "<<i<<" - "<<semestreactual<<" -" ;
-    i++ ;
+
+    if(!miniset.empty())
+    temp.push_back(miniset);
+    miniset.clear();
   }
-  std::cout<<std::endl;
-  arbolestud.preOrden();
+
+
+  for(  int zz = 0 ; zz < temp.size() ; zz++){
+
+    for(std::set<Asignatura*>::iterator itq = temp[zz].begin() ; itq != temp[zz].end() ; itq++){
+      std::pair <std::multimap<Asignatura* , Asignatura*  , comparatorAsign>::iterator, std::multimap<Asignatura* ,Asignatura*  , comparatorAsign>::iterator> ret2 =  this->prerequisitos.equal_range(*itq) ;
+      for (std::multimap<Asignatura* , Asignatura* , comparatorAsign >::iterator rit =ret2.first; rit!=ret2.second ; ++rit){
+        if(!estaposmateria(temp ,rit->second )){
+          temp[zz].insert(rit->second);
+        }
+      }
+    }
+
+
+  }
+
+  std::cout<<std::endl ;
+  semestreactual = this->ultimoSemestre() ;
+  for(int i = 0 ; i < temp.size() ; i++){
+    std::cout<<"\n Semestre : "<<semestreactual<<std::endl ;
+    semestreactual = this->siguienteSemestre(semestreactual) ;
+    for(std::set<Asignatura*>::iterator itz = temp[i].begin() ; itz != temp[i].end() ; itz++){
+      std::cout<<(*itz)->GetIdCurso()<<" - "<<(*itz)->GetNombreAsignatura()<< "\n";
+    }
+    std::cout<<std::endl ;
+  }
+  semestreactual = this->ultimoSemestre() ;
+  std::queue<Asignatura*> colaaux ;
+  ArbolBinarioAVL<SemestrexAsignaturas> arbolestud ;
+  std::set<Asignatura* , comparatorAsign> tempset ;
+  std::set<Asignatura* , comparatorAsign> tempset1 ;
+  std::set<Asignatura* , comparatorAsign> tempset2 ;
+  SemestrexAsignaturas* auxsem = new SemestrexAsignaturas(semestreactual) ;
+  auxsem->setAsignaturas(temp[0]);
+  arbolestud.insertar(*auxsem) ;
+
+  semestreactual = this->siguienteSemestre(semestreactual);
+  auxsem = new SemestrexAsignaturas(semestreactual) ;
+  for(int zz = 1  ; zz < temp.size() ; zz++){
+    for(std::set<Asignatura*>::iterator itq = temp[zz].begin() ; itq != temp[zz].end() ; itq++){
+      tempset = this->estanPrerreq(*itq , arbolestud);
+      if(tempset.empty()){
+        tempset2.insert(*itq);
+      }else{
+        tempset1.insert(*itq);
+      }
+    }
+    auxsem->setAsignaturas(tempset2);
+    arbolestud.insertar(*auxsem) ;
+    tempset2.clear();
+    semestreactual = this->siguienteSemestre(semestreactual);
+    auxsem = new SemestrexAsignaturas(semestreactual) ;
+    for(std::set<Asignatura*>::iterator ity = tempset1.begin() ; ity != tempset1.end() ; ity++){
+      tempset = this->estanPrerreq(*ity , arbolestud);
+      if(tempset.empty()){
+        tempset2.insert(*ity);
+        colaaux.push(*ity);
+      }
+    }
+    while(!colaaux.empty()){
+      tempset1.erase(colaaux.front());
+      colaaux.pop();
+    }
+  }
+  auxsem->setAsignaturas(tempset2);
+  arbolestud.insertar(*auxsem) ;
+  tempset2.clear();
+  while(!tempset1.empty()){
+    semestreactual = this->siguienteSemestre(semestreactual);
+    auxsem = new SemestrexAsignaturas(semestreactual) ;
+    for(std::set<Asignatura*>::iterator ity = tempset1.begin() ; ity != tempset1.end() ; ity++){
+      tempset = this->estanPrerreq(*ity , arbolestud);
+      if(tempset.empty()){
+        tempset2.insert(*ity);
+        colaaux.push(*ity);
+      }
+    }
+    while(!colaaux.empty()){
+      tempset1.erase(colaaux.front());
+      colaaux.pop();
+    }
+    auxsem->setAsignaturas(tempset2);
+    arbolestud.insertar(*auxsem) ;
+    tempset2.clear();
+  }
+
+std::cout<<std::endl;
+arbolestud.inOrden();
+
 }
 /*=============================================================================================================================*/
 std::string SAE::siguienteSemestre(std::string& semestre){
@@ -753,11 +790,11 @@ void SAE::eliminarInnecesarios(std::set<Asignatura* , comparatorAsign>& siguient
   }
 }
 /*=============================================================================================================================*/
-bool SAE::estanPrerreq(Asignatura* asign , ArbolBinarioAVL<SemestrexAsignaturas> &arbol) {
+std::set<Asignatura* , comparatorAsign>  SAE::estanPrerreq(Asignatura* asign , ArbolBinarioAVL<SemestrexAsignaturas> &arbol) {
   std::pair <std::multimap<Asignatura* , Asignatura* >::iterator, std::multimap<Asignatura* ,Asignatura* >::iterator> ret;
   std::queue<Asignatura*> colaaux ;
   ret = this->prerequisitos.equal_range(asign);
-  std::set<Asignatura*> setaux ;
+  std::set<Asignatura* , comparatorAsign> setaux ;
   for (std::multimap<Asignatura* , Asignatura* >::iterator rit=ret.first; rit!=ret.second ; ++rit){
     setaux.insert(rit->second);
   }
@@ -774,6 +811,22 @@ bool SAE::estanPrerreq(Asignatura* asign , ArbolBinarioAVL<SemestrexAsignaturas>
     setaux.erase(colaaux.front());
     colaaux.pop();
   }
-  return setaux.empty() ;
+  return setaux;
+}
+/*=============================================================================================================================*/
+void SAE::agregardemas(std::set<Asignatura*> &asign  , ArbolBinarioAVL<SemestrexAsignaturas> &arbol) {
+
+}
+/*=============================================================================================================================*/
+bool SAE::estaposmateria(std::vector<std::set<Asignatura* , comparatorAsign> > &temp , Asignatura* asign ) {
+  bool ya = false  ;
+  for(  int zz = 0 ; zz < temp.size() && !ya; zz++){
+    for(std::set<Asignatura*>::iterator itq = temp[zz].begin() ; itq != temp[zz].end() && !ya; itq++){
+      if(*itq == asign){
+        ya = true ;
+      }
+    }
+  }
+  return ya ;
 }
 #endif

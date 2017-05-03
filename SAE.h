@@ -1,4 +1,4 @@
-#ifndef __TAD__SAE__H__
+  #ifndef __TAD__SAE__H__
 #define __TAD__SAE__H__
 /*=============================================================================================================================*/
 #include "TadAula.h"
@@ -82,6 +82,9 @@ bool operator != (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2)
 
 std::ostream& operator << (std::ostream &o, const SemestrexAsignaturas t1){
   o  << t1.semestre ;
+  for(std::set<Asignatura*>::iterator it = t1.asignaturas.begin() ; it != t1.asignaturas.end() ; it ++ ){
+    o <<"\n ===== > "<<(*it)->GetIdCurso()<<(*it)->GetNombreAsignatura() ;
+  }
   return o;
 }
 
@@ -116,7 +119,10 @@ public:
   bool verificarsiesPrerrequisito(Asignatura* asign , Asignatura* asign2) ;
   bool esprerrequisito(Asignatura* asign , std::set<Asignatura* , comparatorAsign > &set1) ;
   void eliminarInnecesarios(std::set<Asignatura* , comparatorAsign>& siguientes, ArbolBinarioAVL<SemestrexAsignaturas> &arbol  );
-  bool estanPrerreq(Asignatura* asign , ArbolBinarioAVL<SemestrexAsignaturas> &arbol) ;
+  std::set<Asignatura* , comparatorAsign>  estanPrerreq(Asignatura* asign , ArbolBinarioAVL<SemestrexAsignaturas> &arbol) ;
+  void agregardemas(std::set<Asignatura*> &asign  , ArbolBinarioAVL<SemestrexAsignaturas> &arbol) ;
+  bool estaposmateria(std::vector<std::set<Asignatura* , comparatorAsign> > &temp , Asignatura* asign ) ;
+  bool mismonivel(Asignatura* asig , std::vector<std::set<Asignatura* , comparatorAsign> > &temp );
 protected:
   std::list<Semestre*> listaSemestres ;
   std::list<Departamento*> departamentos ;
