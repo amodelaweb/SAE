@@ -121,29 +121,32 @@ std::cout<<std::endl<<"\t\t  ╚══════╝╚═╝  ╚═╝╚═�
       a = false ;
       std::cout<<std::endl<<underline<<green<<"\t                                                         " ;
       std::cout<<std::endl<<underline<<green<<"\t ========= Muchas Gracias por usar el programa ========= \n" ;
-      std::cout<<reset<<std::endl<<bold<<magenta  ;
+      std::cout<<reset<<std::endl<<bold<<magenta<<std::endl  ;
 
-
-      std::cout<<std::endl<<"\t                      ..:::::::::..";
-      std::cout<<std::endl<<"\t                  ..:::aad8888888baa:::..";
-      std::cout<<std::endl<<"\t              .::::d:?88888888888?::8b::::.";
-      std::cout<<std::endl<<"\t            .:::d8888:?88888888??a888888b:::.";
-      std::cout<<std::endl<<"\t          .:::d8888888a8888888aa8888888888b:::.";
-      std::cout<<std::endl<<"\t         ::::dP::::::::88888888888::::::::Yb::::";
-      std::cout<<std::endl<<"\t        ::::dP:::::::::Y888888888P:::::::::Yb::::";
-      std::cout<<std::endl<<"\t      :::::Y8baaaaaaaaaa88P:T:Y88aaaaaaaaaad8P:::::";
-      std::cout<<std::endl<<"\t      :::::::Y88888888888P::|::Y88888888888P:::::::";
-      std::cout<<std::endl<<"\t      ::::::::::::::::888:::|:::888::::::::::::::::";
-      std::cout<<std::endl<<"\t      `:::::::::::::::8888888888888b::::::::::::::'";
-      std::cout<<std::endl<<"\t       :::::::::::::::88888888888888::::::::::::::";
-      std::cout<<std::endl<<"\t        :::::::::::::d88888888888888:::::::::::::";
-      std::cout<<std::endl<<"\t         ::::::::::::88::88::88:::88::::::::::::";
-      std::cout<<std::endl<<"\t          `::::::::::88::88::88:::88::::::::::'";
-      std::cout<<std::endl<<"\t            `::::::::88::88::P::::88::::::::'";
-      std::cout<<std::endl<<"\t              `::::::88::88:::::::88::::::'";
-      std::cout<<std::endl<<"\t                 ``:::::::::::::::::::''";
-      std::cout<<std::endl<<"\t                      ``:::::::::''";
-      std::cout<<std::endl<<""<<reset<<std::endl;
+      std::cout<<std::endl<<"\t__________________________________________________________";
+      std::cout<<std::endl<<"\t|                                                        |";
+      std::cout<<std::endl<<"\t|                      ..:::::::::..                     |";
+      std::cout<<std::endl<<"\t|                  ..:::aad8888888baa:::..               |";
+      std::cout<<std::endl<<"\t|              .::::d:?88888888888?::8b::::.             |";
+      std::cout<<std::endl<<"\t|            .:::d8888:?88888888??a888888b:::.           |";
+      std::cout<<std::endl<<"\t|          .:::d8888888a8888888aa8888888888b:::.         |";
+      std::cout<<std::endl<<"\t|         ::::dP::::::::88888888888::::::::Yb::::        |";
+      std::cout<<std::endl<<"\t|        ::::dP:::::::::Y888888888P:::::::::Yb::::       |";
+      std::cout<<std::endl<<"\t|      :::::Y8baaaaaaaaaa88P:T:Y88aaaaaaaaaad8P:::::     |";
+      std::cout<<std::endl<<"\t|      :::::::Y88888888888P::|::Y88888888888P:::::::     |";
+      std::cout<<std::endl<<"\t|      ::::::::::::::::888:::|:::888::::::::::::::::     |";
+      std::cout<<std::endl<<"\t|      `:::::::::::::::8888888888888b::::::::::::::'     |";
+      std::cout<<std::endl<<"\t|       :::::::::::::::88888888888888::::::::::::::      |";
+      std::cout<<std::endl<<"\t|        :::::::::::::d88888888888888:::::::::::::       |";
+      std::cout<<std::endl<<"\t|         ::::::::::::88::88::88:::88::::::::::::        |";
+      std::cout<<std::endl<<"\t|          `::::::::::88::88::88:::88::::::::::'         |";
+      std::cout<<std::endl<<"\t|            `::::::::88::88::P::::88::::::::'           |";
+      std::cout<<std::endl<<"\t|              `::::::88::88:::::::88::::::'             |";
+      std::cout<<std::endl<<"\t|                 ``:::::::::::::::::::''                |";
+      std::cout<<std::endl<<"\t|                      ``:::::::::''                     |";
+      std::cout<<std::endl<<"\t|                                                        |";
+      std::cout<<std::endl<<"\t|________________________________________________________|";
+      std::cout<<std::endl<<""<<reset<<std::endl<<std::endl;
 
       break ;
       /* CASO DE INSTRUCTIVO */
