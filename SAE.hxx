@@ -19,7 +19,6 @@ std::string SAE::RealizarClaseAsign(std::vector<std::string> vector1){
   dias.push_back("Dom") ;
   dias.push_back("NOCLASE") ;
   if(vector1.size() > 0){
-
     for (int k = 1 ; k < vector1[5].size() ; k++){
       if(vector1[5][k-1] == '0' && !w){
         vector1[5].erase((k -1) , k) ;
@@ -87,7 +86,7 @@ bool SAE::RealizarEstuclase(std::vector<std::string> vector1){
 
     if( !VerificarSemestre(vector1[0])->VerificarEstudiante(idstud) ){
 
-      VerificarSemestre(vector1[0])->AgregarEstudiante(idstud , vector1[4] ,vector1[3].erase(0,1) , vector1[5] , vector1[6] , vector1[7] , vector1[9]  , vector1[1]) ;
+      VerificarSemestre(vector1[0])->AgregarEstudiante(idstud , vector1[4].erase(vector1[4].size()-1  , vector1[4].size()) ,vector1[3], vector1[5] , vector1[6] , vector1[7] , vector1[9]  , vector1[1]) ;
     }
     if(VerificarSemestre(vector1[0])->VerificarEstudiante2(idstud) != nullptr){
 
