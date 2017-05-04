@@ -19,6 +19,7 @@ std::string SAE::RealizarClaseAsign(std::vector<std::string> vector1){
   dias.push_back("Dom") ;
   dias.push_back("NOCLASE") ;
   if(vector1.size() > 0){
+
     for (int k = 1 ; k < vector1[5].size() ; k++){
       if(vector1[5][k-1] == '0' && !w){
         vector1[5].erase((k -1) , k) ;
@@ -86,7 +87,7 @@ bool SAE::RealizarEstuclase(std::vector<std::string> vector1){
 
     if( !VerificarSemestre(vector1[0])->VerificarEstudiante(idstud) ){
 
-      VerificarSemestre(vector1[0])->AgregarEstudiante(idstud , vector1[4].erase(vector1[4].size()-1  , vector1[4].size()) ,vector1[3], vector1[5] , vector1[6] , vector1[7] , vector1[9]  , vector1[1]) ;
+      VerificarSemestre(vector1[0])->AgregarEstudiante(idstud , vector1[4] ,vector1[3], vector1[5] , vector1[6] , vector1[7] , vector1[9]  , vector1[1]) ;
     }
     if(VerificarSemestre(vector1[0])->VerificarEstudiante2(idstud) != nullptr){
 
@@ -575,6 +576,7 @@ std::string SAE::ultimoSemestre(){
 }
 /*=============================================================================================================================*/
 void SAE::Demandaestud(std::string idestud ){
+  // AQUI PRIMERO LLENO LA INFORMACION DE TODAS LAS ASIGNATURAS DEL ESTUDIANTE
   std::string semestreactual = this->ultimoSemestre() ;
   std::set<Asignatura *  , comparatorAsign > primerasasign;
   for(std::list<Semestre*>::iterator it = this->listaSemestres.begin() ; it != this->listaSemestres.end() ; it++){
@@ -585,36 +587,39 @@ void SAE::Demandaestud(std::string idestud ){
       }
     }
   }
+  //AQUI INVIERTO EL MAPA , INGRESANDO EL SECOND COMO CLAVE Y EL FIRST COMO DATO
   std::multimap<Asignatura* , Asignatura*  , comparatorAsign> mapreverse ;
   for (std::multimap<Asignatura*,Asignatura*>::iterator it = this->prerequisitos.begin(); it != this->prerequisitos.end(); ++it){
     mapreverse.insert(std::pair<  Asignatura* , Asignatura* >(it->second ,it->first) ) ;
   }
-
+  //INICIALIZO EL VECTOR CON LAS PRIMERAS ASIGNATURAS EN LA PRIMERA POSICION DEL VECTOR
   std::pair <std::multimap<Asignatura* , Asignatura* >::iterator, std::multimap<Asignatura* ,Asignatura* >::iterator> ret;
   std::vector<std::set<Asignatura* , comparatorAsign> > temp  ;
   std::set<Asignatura* , comparatorAsign> miniset ;
   temp.push_back(primerasasign) ;
-
+  // AQUI EMPIEZO EL CICO EN EL VECTOR
   for(  int zz = 0 ; zz < temp.size() ; zz++){
-
+    //CICLO PARA CADA ASIGNATURA DLE VECTOR DE SET
     for(std::set<Asignatura*>::iterator itq = temp[zz].begin() ; itq != temp[zz].end() ; itq++){
       std::pair <std::multimap<Asignatura* , Asignatura*  , comparatorAsign>::iterator, std::multimap<Asignatura* ,Asignatura*  , comparatorAsign>::iterator> ret =  mapreverse.equal_range(*itq) ;
+      //AQUI HAGO EL CICLO PARA CADA ASIGNATURA QUE ABRE ESA ASIGNATURA , MAPVERSE.INSERT
       for (std::multimap<Asignatura* , Asignatura* , comparatorAsign >::iterator rit =ret.first; rit!=ret.second ; ++rit){
+        // LA FUNCION ESTA POS MATERIA VERIFICA QUE NO ESTE LA ASIGNATURA , YA EN EL VECTOR
         if(!estaposmateria(temp ,rit->second )){
+          // SI NO ESTA LO INSERTO EN EL VECTOR TEMPORAL  ESTO PARA DESPUES METERLO EN LA SIGUIENTE POSICION
           miniset.insert(rit->second);
-
         }
       }
     }
-
+    // SI EL MINISET NO ESTA VACIO  , OSEA QUE HAY NUEVAS ASIGNATURAS PARA INGRESAS , AGREGAO EL TEMPORAL AL SIGUIENTE NIVEL
     if(!miniset.empty())
     temp.push_back(miniset);
+    // LIMPIO EL TEMPORAL PARA DE ESTA MANERA TENER LIMPIO PARA EL SIGUIENTE NIVEL Y COMO AGREGUE AL VECTOR , AL INCREMENTAR ESTARA EN LAS ASIGNATURAS AGREGADAS
     miniset.clear();
   }
-
-
+  // DESDE AQUI ES OPCIONAL
+  // AQUI EN ESTE FOR LO QUE HAGO ES RECORRER DE NUEVO PARA AGRGAR LOS PRERREQUISITOS QUE FALTEN OSEA LOS QUE SON HOJA
   for(  int zz = 0 ; zz < temp.size() ; zz++){
-
     for(std::set<Asignatura*>::iterator itq = temp[zz].begin() ; itq != temp[zz].end() ; itq++){
       std::pair <std::multimap<Asignatura* , Asignatura*  , comparatorAsign>::iterator, std::multimap<Asignatura* ,Asignatura*  , comparatorAsign>::iterator> ret2 =  this->prerequisitos.equal_range(*itq) ;
       for (std::multimap<Asignatura* , Asignatura* , comparatorAsign >::iterator rit =ret2.first; rit!=ret2.second ; ++rit){
@@ -626,7 +631,7 @@ void SAE::Demandaestud(std::string idestud ){
 
 
   }
-
+  // AQUI ES SOLO IMPRESION TEMPORAL HASTA EL PROXIMO COMETARIO
   std::cout<<std::endl ;
   semestreactual = this->ultimoSemestre() ;
   for(int i = 0 ; i < temp.size() ; i++){
@@ -646,7 +651,7 @@ void SAE::Demandaestud(std::string idestud ){
   SemestrexAsignaturas* auxsem = new SemestrexAsignaturas(semestreactual) ;
   auxsem->setAsignaturas(temp[0]);
   arbolestud.insertar(*auxsem) ;
-
+  //AQUI AGREGO A MI ARBOL BINARIO LAS ASIGNATURAS VERIFICANDO DE QUE ESTEN TODOS LOS PRERREQUISITOS
   semestreactual = this->siguienteSemestre(semestreactual);
   auxsem = new SemestrexAsignaturas(semestreactual) ;
   for(int zz = 1  ; zz < temp.size() ; zz++){
@@ -696,7 +701,7 @@ void SAE::Demandaestud(std::string idestud ){
     arbolestud.insertar(*auxsem) ;
     tempset2.clear();
   }
-
+// AQUI IMPRIMO
 std::cout<<std::endl;
 arbolestud.inOrden();
 
