@@ -20,5 +20,5 @@ cargar_info_estud listaClasesInscritasEstud-1230.csv
 cargar_info_prerreq prerrequisitos.csv
 proy_demanda 15838
 proy_semestres 12143512
-proy_semestres 10159637
+proy_semestres 12172962
  ~/.bash_aliases
