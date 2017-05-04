@@ -81,10 +81,10 @@ bool operator != (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2)
 }
 
 std::ostream& operator << (std::ostream &o, const SemestrexAsignaturas t1){
-  o  << "\n*) Para el semestre "<< t1.semestre<<" : " ;
+  o  <<bold1<<blue1<<"\n*) Para el semestre "<<magenta1<<t1.semestre<<blue1<<" : " ;
   int i = 1 ;
   for(std::set<Asignatura*>::iterator it = t1.asignaturas.begin() ; it != t1.asignaturas.end() ; it ++ ){
-    o <<"\n * "<<i++<<" ) "<<(*it)->GetIdCurso()<<(*it)->GetNombreAsignatura() ;
+    o <<yellow1<<"\n * "<<i++<<" ) "<<white1<<(*it)->GetIdCurso()<<(*it)->GetNombreAsignatura() ;
   }
   return o;
 }
