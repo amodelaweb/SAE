@@ -18,7 +18,7 @@ public:
 	void AgregarClasenotas(Clase* clase , float nota , std::string estadoinscrp ,int creditosinscrp ,std::string sistemacalf , std::string finscrp , std::string fretiro) ;
 	std::string GetNombreComp() ;
 	std::list<ClaseXestudiante*> GetClases() ;
-	bool verificarclasenota(Clase* clase) ;	
+	bool verificarclasenota(Clase* clase) ;
 protected:
 	std::string idestud ;
 	std::string Nombre;
@@ -29,6 +29,14 @@ protected:
 	std::string cd_actual_baja ;
 	std::string NombreActualPrograma;
 	std::list<ClaseXestudiante*> clases;
+//=========================================================================
+	friend bool operator == (const Estudiante &e1, const Estudiante &e2);
+	friend bool operator != (const Estudiante &e1, const Estudiante &e2);
+	friend bool operator <  (const Estudiante &e1, const Estudiante &e2);
+	friend bool operator >  (const Estudiante &e1, const Estudiante &e2);
+	friend bool operator >= (const Estudiante &e1, const Estudiante &e2);
+	friend bool operator <= (const Estudiante &e1, const Estudiante &e2);
+	friend std::ostream& operator << (std::ostream &o, const Estudiante* e1);
 };
 #include "TadEstudiante.hxx"
 

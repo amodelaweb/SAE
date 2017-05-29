@@ -38,7 +38,9 @@ public:
 	void SetSeccion(int seccion) ;
 	void AgregarSesion(std::string HoraInicioClase,std::string Componenete , std::string HoraFinClase , std::string TipoSesion , std::string Dia , std::string Idaula );
 	Sesion* VerificarSesion(std::string Dia);
-	std::string Getidasig() ; 
+	std::string Getidasig() ;
+//=========================================================================
+	friend std::ostream& operator << (std::ostream &o, const Clase* e1);
 protected:
 	std::list<Sesion*> ListaSesion;
 	std::string ciclolectivo ;

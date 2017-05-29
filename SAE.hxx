@@ -4,7 +4,7 @@
 
 /*=========HOLA====================================================================================================================*/
 SAE::SAE(){
-
+  this->RedSocial = new Graph<Estudiante* , Clase*> (false);
 }
 /*=============================================================================================================================*/
 std::string SAE::RealizarClaseAsign(std::vector<std::string> vector1){
@@ -863,5 +863,43 @@ bool SAE::estaposmateria(std::vector<std::set<Asignatura* , comparatorAsign> > &
     }
   }
   return ya ;
+}
+/*=============================================================================================================================*/
+bool SAE::makeRedSocial(std::string semestre){
+  Semestre* aux = this->VerificarSemestre(semestre);
+    delete this->RedSocial ;
+    this->RedSocial = new Graph<Estudiante* , Clase*> (false);
+  if(aux != nullptr){
+
+    std::list<Estudiante*>::iterator it ;
+    std::list<Estudiante*> aux1 = aux->Getestudiantes();
+    std::list<ClaseXestudiante*> aux2  ;
+    std::list<ClaseXestudiante*> aux3  ;
+    for(it = aux1.begin() ; it != aux1.end() ;it++){
+      this->RedSocial->addVertex(*it);
+    }
+    for(it = aux1.begin() ; it != aux1.end() ;it++){
+      aux2 = (*it)->GetClases();
+      for(std::list<ClaseXestudiante*>::iterator it1  = aux2.begin() ; it1 != aux2.end() ;it1++){
+        for(std::list<Estudiante*>::iterator it2 = aux1.begin() ; it2 != aux1.end() ; it2++){
+          if(it == it2){
+            continue ;
+          }
+          aux3 = (*it2)->GetClases();
+          for(std::list<ClaseXestudiante*>::iterator it3  = aux3.begin() ; it3 != aux3.end() ;it3++){
+            if((*it3)->Getclase() == (*it1)->Getclase()){
+              this->RedSocial->addEdge((*it), (*it2) , 1 ,(*it1)->Getclase());
+            }
+          }
+        }
+      }
+    }
+    return true ;
+  }
+  return false ;
+}
+/*=============================================================================================================================*/
+void SAE::printSocial(){
+  this->RedSocial->printAll();
 }
 #endif

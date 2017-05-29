@@ -134,6 +134,7 @@ std::string Archivo::separarPalabra2(){
     lineact.erase(0, pos + 1);
     if(temp[0] == '"'){
       temp.erase(0,1);
+      temp.erase(temp.size()-1 , temp.size());
     }
     vector1.push_back(temp);
   }

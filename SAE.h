@@ -4,9 +4,11 @@
 #include "TadAula.h"
 #include "TadSemestre.h"
 #include "TadArchivo.h"
+#include "TadEstudiante.h"
 #include "TadDepartamento.h"
 #include "TadAsignatura.h"
 #include "ArbolBinario.h"
+#include "Graph.h"
 #include <iostream>
 #include <string>
 #include <list>
@@ -124,12 +126,14 @@ public:
   void agregardemas(std::set<Asignatura*> &asign  , ArbolBinarioAVL<SemestrexAsignaturas> &arbol) ;
   bool estaposmateria(std::vector<std::set<Asignatura* , comparatorAsign> > &temp , Asignatura* asign ) ;
   bool mismonivel(Asignatura* asig , std::vector<std::set<Asignatura* , comparatorAsign> > &temp );
+  bool makeRedSocial(std::string semestre);
+  void printSocial();
 protected:
   std::list<Semestre*> listaSemestres ;
   std::list<Departamento*> departamentos ;
   std::list<Aula*> aulas ;
   std::multimap<  Asignatura* , Asignatura* , comparatorAsign > prerequisitos ;
-
+  Graph<Estudiante* , Clase*> *RedSocial;
 };
 
 #include "SAE.hxx"

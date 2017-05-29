@@ -38,13 +38,13 @@ int main(int argc, char const *argv[]) {
   bool a = true ;
   bool prerreq = false ;
 
-std::cout<<cyan<<bold<<std::endl<<"\t\t  ███████╗ █████╗ ███████╗";
-std::cout<<std::endl<<"\t\t  ██╔════╝██╔══██╗██╔════╝";
-std::cout<<std::endl<<"\t\t  ███████╗███████║█████╗  ";
-std::cout<<std::endl<<"\t\t  ╚════██║██╔══██║██╔══╝  ";
-std::cout<<std::endl<<"\t\t  ███████║██║  ██║███████╗";
-std::cout<<std::endl<<"\t\t  ╚══════╝╚═╝  ╚═╝╚══════╝"<<std::endl;
-
+  std::cout<<cyan<<bold<<std::endl<<"\t\t  ███████╗ █████╗ ███████╗";
+  std::cout<<std::endl<<"\t\t  ██╔════╝██╔══██╗██╔════╝";
+  std::cout<<std::endl<<"\t\t  ███████╗███████║█████╗  ";
+  std::cout<<std::endl<<"\t\t  ╚════██║██╔══██║██╔══╝  ";
+  std::cout<<std::endl<<"\t\t  ███████║██║  ██║███████╗";
+  std::cout<<std::endl<<"\t\t  ╚══════╝╚═╝  ╚═╝╚══════╝"<<std::endl;
+  bool dd   ;
   do{
     std::cout<<std::endl<<blue<<bold<<underline<<user_name<<yellow<<" $ "<<reset<<green<<"" ;
     std::cin.getline (argv1,300);
@@ -115,7 +115,31 @@ std::cout<<std::endl<<"\t\t  ╚══════╝╚═╝  ╚═╝╚═�
       /* PROYECTAR SEMESTRES */
       case 1540:
       /* PROY_SEMESTRES */
-      sae.Demandaestud(archivo);
+      std::cout<<std::endl;
+      if(prerreq){
+        if(archivo != ""){
+          sae.Demandaestud(archivo);
+        }
+      }
+      else{
+        std::cout<<"\n \t ===== PRIMERO LLENE LA INFORMACION DE PRE REQUISITOS =====" ;
+      }
+      break ;
+      /* CASO DE RED SOCIAL */
+      case 1045:
+      dd = false ;
+      if(archivo == " "){
+        dd = sae.makeRedSocial(sae.ultimoSemestre());
+        sae.printSocial();
+      }else{
+        dd = sae.makeRedSocial(archivo);
+        sae.printSocial();
+      }
+      if(!dd){
+        std::cout<<bold<<red<<"\n\t - NO EXISTE SEMESTRE / NO SE CARGO INFORMACION NECESARIA. - \n \n";
+      }else{
+        std::cout<<bold<<green<<"\n\t - SE CARGO CORRECTAMENTE EL GRAFO - \n \n";
+      }
       break ;
       /* CASO DE FINALIZAR PROGRAMA */
       case 539:
@@ -227,14 +251,24 @@ std::cout<<std::endl<<"\t\t  ╚══════╝╚═╝  ╚═╝╚═�
         "\tpara cada una de ellas se genera un árbol de posibles asignaturas futuras, de acuerdo a la información de \n"
         "\tprerrequisitos ya registrada con el comando cargar_info_prerreq. Luego, se combina la información de"
         "\testos árboles para informar las posibles asignaturas a cursar por el estudiante en cada semestre futuro.";
-      }
-      else{
+      }else if(archivo == "red_social"){
+        std::cout<<"\n\t*Comando red_social [IDSem]\n";
+        std::cout<<"\n\tPosibles salidas en pantalla: \n";
+        std::cout<<"\n\t(Información incompleta) La información necesaria (programación de asignaturas, inscripciones";
+        std::cout<<"\n\tde estudiantes) no ha sido cargada completamente.";
+        std::cout<<"\n\t(Resultado exitoso) La red social de los estudiantes ha sido generada exitosamente.";
+        std::cout<<"\n\tDescripcion : descripción: Utilizando la información de asignaturas programadas e inscripciones de estudiantes, el sistema";
+        std::cout<<"\n\tgenera un grafo que representa la red social del semestre actual, donde cada estudiante se conecta a otros";
+        std::cout<<"\n\tsi y sólo sí se encuentran cursando la misma clase (son compañeros de asignatura y de clase).";
+        std::cout<<"\n\tUso : Si no propociona el id del semestre se usara el ultimo cargado.";
+      }else{
         std::cout<<"\n\t*comando: horario_estud ID_estud\n";
         std::cout<<"\n\t*comando: cargar_info_estud\n";
         std::cout<<"\n\t*comando: cargar_info_asign\n";
         std::cout<<"\n\t*comando: cargar_info_prerreq\n";
         std::cout<<"\n\t*comando: proy_demanda\n";
         std::cout<<"\n\t*comando: proy_semestres\n";
+        std::cout<<"\n\t*comando: red_social\n";
         std::cout<<"\n\t*comando: salir\n";
       }
       break ;
@@ -300,3 +334,4 @@ std::string sacarnombrearch(char*argv1) {
     return " " ;
   }
 }
+// POR SANTIAGO CHAUSTRE.
