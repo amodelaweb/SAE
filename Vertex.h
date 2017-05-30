@@ -14,8 +14,8 @@ struct Edge{
   unsigned long weigth ;
   bool visited ;
   E data ;
-  Edge(unsigned long weigth , bool visited , E data) : weigth(weigth) , visited(visited) , data(data){
-  }
+  Edge(unsigned long weigth , bool visited , E data) : weigth(weigth) , visited(visited) , data(data){}
+  Edge(){}
 };
 //=========================================================================
 template < class T , class E >
@@ -42,7 +42,7 @@ public:
   bool exist(Vertex<T , E>* v );
   void resetVisited();
   void rmEdge(Vertex<T , E>* v , E data);
-  void reAddEdge(Vertex<T , E>* v);
+  void reAddEdge(Vertex<T , E>* v , E data);
   bool ExistEdge(Vertex<T , E>* v);
   bool HasAdjacent(Vertex<T , E>* v);
   unsigned int NumberOfNonVisitedVertexs();

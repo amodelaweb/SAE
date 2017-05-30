@@ -1,4 +1,4 @@
-  #ifndef __TAD__SAE__H__
+#ifndef __TAD__SAE__H__
 #define __TAD__SAE__H__
 /*=============================================================================================================================*/
 #include "TadAula.h"
@@ -9,12 +9,9 @@
 #include "TadAsignatura.h"
 #include "ArbolBinario.h"
 #include "Graph.h"
-#include <iostream>
 #include <string>
-#include <list>
+#include <deque>
 #include <vector>
-#include <set>
-#include <map>
 #include <queue>
 /*=============================================================================================================================*/
 const std::string red1("\x1B[31m");
@@ -61,8 +58,7 @@ public:
 
 
 };
-
-
+/*=============================================================================================================================*/
 bool operator == (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2){
   return t1.semestre == t2.semestre ;
 }
@@ -81,7 +77,7 @@ bool operator <= (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2)
 bool operator != (const SemestrexAsignaturas t1 , const SemestrexAsignaturas t2){
   return t1.semestre != t2.semestre   ;
 }
-
+/*=============================================================================================================================*/
 std::ostream& operator << (std::ostream &o, const SemestrexAsignaturas t1){
   o  <<bold1<<blue1<<"\n*) Para el semestre "<<magenta1<<t1.semestre<<blue1<<" : " ;
   int i = 1 ;
@@ -90,7 +86,6 @@ std::ostream& operator << (std::ostream &o, const SemestrexAsignaturas t1){
   }
   return o;
 }
-
 /*=============================================================================================================================*/
 class SAE
 {
@@ -128,6 +123,7 @@ public:
   bool mismonivel(Asignatura* asig , std::vector<std::set<Asignatura* , comparatorAsign> > &temp );
   bool makeRedSocial(std::string semestre);
   void printSocial();
+  int GradosSeparacion(std::string id1 ,std::string id2 , std::string idsem );
 protected:
   std::list<Semestre*> listaSemestres ;
   std::list<Departamento*> departamentos ;
@@ -135,6 +131,6 @@ protected:
   std::multimap<  Asignatura* , Asignatura* , comparatorAsign > prerequisitos ;
   Graph<Estudiante* , Clase*> *RedSocial;
 };
-
+/*=============================================================================================================================*/
 #include "SAE.hxx"
 #endif

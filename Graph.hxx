@@ -278,24 +278,24 @@ void Graph<T,E>::EulerPath(Vertex<T ,E>* V){
 }
 //=========================================================================
 template < class T , class E>
-void Graph<T,E>::rmEdge(Vertex<T ,E>* v1 , Vertex<T ,E>* v2){
+void Graph<T,E>::rmEdge(Vertex<T ,E>* v1 , Vertex<T ,E>* v2 , E data){
   typename std::set<Vertex<T ,E>*>::iterator it  = this->vertexs.find(v1);
   typename std::set<Vertex<T ,E>*>::iterator it1 = this->vertexs.find(v2);
   if(it != this->vertexs.end() && it1 != this->vertexs.end()){
-    (*it)->rmEdge(v2) ;
+    (*it)->rmEdge(v2 , data ) ;
     if(!this->type)
-    (*it1)->rmEdge(v1);
+    (*it1)->rmEdge(v1 , data );
   }
 }
 //=========================================================================
 template < class T , class E>
-void Graph<T,E>::reAddEdge(Vertex<T ,E>* v1 , Vertex<T ,E>* v2){
+void Graph<T,E>::reAddEdge(Vertex<T ,E>* v1 , Vertex<T ,E>* v2 , E data){
   typename std::set<Vertex<T ,E>*>::iterator it  = this->vertexs.find(v1);
   typename std::set<Vertex<T ,E>*>::iterator it1 = this->vertexs.find(v2);
   if(it != this->vertexs.end() && it1 != this->vertexs.end()){
-    (*it)->reAddEdge(v2) ;
+    (*it)->reAddEdge(v2 , data) ;
     if(!this->type)
-    (*it1)->reAddEdge(v1);
+    (*it1)->reAddEdge(v1 , data );
   }
 }
 //=========================================================================
@@ -452,4 +452,65 @@ void  Graph<T,E>::printAll(){
   std::cout<<std::endl  ;
 }
 //=========================================================================
-#endif
+template<class T , class E>
+int Graph<T,E>::DFSSeparationGrade(unsigned int maxgrade , Vertex<T,E>* beg , Vertex<T,E>* end , int hopes , std::deque<Result<T,E>*> &deque , Edge<E>* edge){
+
+  if(beg == end ){
+    deque.push_front(new Result<T,E>( beg, edge) );
+    return hopes ;
+  }
+
+  int min = 999999 ;
+  int temphopes ;
+  int temp ;
+  typename std::multimap<Vertex<T,E>* , Edge<E>* > aux2 = beg->GetAdjacents() ;
+  beg->setVisited(true);
+  for(typename std::multimap<Vertex<T,E>* , Edge<E>* >::iterator it  = aux2.begin() ; it != aux2.end() ; it++){
+
+    if(!(it->second)->visited && !(it->first)->visited ){
+
+      if((it->first) != end ){
+        this->rmEdge(beg , (it->first) , (it->second)->data);
+      }
+
+      temp = this->DFSSeparationGrade(maxgrade , (it->first) , end , hopes++  , deque , (it->second));
+
+      if(temp < min ){
+        deque.push_front(new Result<T,E>( beg , edge ));
+        if( min != 999999){
+          do{
+            deque.pop_back();
+          }while(!deque.empty() && deque.back()->v != end );
+
+        }
+        min = temp  ;
+      }else{
+        if(temp != 999999){
+          while(!deque.empty() && deque.front()->v != end){
+            deque.pop_front();
+          }
+          if(!deque.empty()){
+            deque.pop_front();
+          }
+
+        }
+      }
+    }
+  }
+  beg->setVisited(false);
+  return min ;
+}
+  //=========================================================================
+  template<class T , class E>
+  int  Graph<T,E>::DFSSeparationGrade(T begin , T end , std::deque<Result<T,E>*> &deque){
+    Vertex<T,E>* a = this->findVertex(begin);
+    Vertex<T,E>* b = this->findVertex(end);
+    if( a != nullptr && b != nullptr){
+      Edge<E>* e = new Edge<E>() ;
+      return this->DFSSeparationGrade(7 , a , b , -1 , deque , e) ;
+    }else{
+      return -1 ;
+    }
+  }
+  //=========================================================================
+  #endif

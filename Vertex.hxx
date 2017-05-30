@@ -139,12 +139,12 @@ void Vertex<T , E >::rmEdge(Vertex<T , E >* v, E data){
 }
 //=========================================================================
 template < class T  , class E >
-void Vertex<T , E >::reAddEdge(Vertex<T , E >* v){
+void Vertex<T , E >::reAddEdge(Vertex<T , E >* v , E data){
   bool band = false ;
   std::pair <typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator, typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator> ret;
   ret = this->adjacents.equal_range(v);
   for (typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator it=ret.first; it!=ret.second; ++it){
-    if( (it->second)->visited && !band ){
+    if( (it->second)->visited && !band &&  (it->second)->data == data ){
       (it->second)->visited = false ;
       band = true ;
     }

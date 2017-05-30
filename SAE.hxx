@@ -867,8 +867,8 @@ bool SAE::estaposmateria(std::vector<std::set<Asignatura* , comparatorAsign> > &
 /*=============================================================================================================================*/
 bool SAE::makeRedSocial(std::string semestre){
   Semestre* aux = this->VerificarSemestre(semestre);
-    delete this->RedSocial ;
-    this->RedSocial = new Graph<Estudiante* , Clase*> (false);
+  delete this->RedSocial ;
+  this->RedSocial = new Graph<Estudiante* , Clase*> (false);
   if(aux != nullptr){
 
     std::list<Estudiante*>::iterator it ;
@@ -881,7 +881,7 @@ bool SAE::makeRedSocial(std::string semestre){
     for(it = aux1.begin() ; it != aux1.end() ;it++){
       aux2 = (*it)->GetClases();
       for(std::list<ClaseXestudiante*>::iterator it1  = aux2.begin() ; it1 != aux2.end() ;it1++){
-        for(std::list<Estudiante*>::iterator it2 = aux1.begin() ; it2 != aux1.end() ; it2++){
+        for(std::list<Estudiante*>::iterator it2 = it ; it2 != aux1.end() ; it2++){
           if(it == it2){
             continue ;
           }
@@ -901,5 +901,21 @@ bool SAE::makeRedSocial(std::string semestre){
 /*=============================================================================================================================*/
 void SAE::printSocial(){
   this->RedSocial->printAll();
+}
+/*=============================================================================================================================*/
+int SAE::GradosSeparacion(std::string id1 ,std::string id2 , std::string idsem){
+  Semestre* aux = this->VerificarSemestre(idsem) ;
+  if(aux != nullptr){
+    Estudiante*  e =aux->VerificarEstudiante2(id1) ;
+    Estudiante*  f =aux->VerificarEstudiante2(id2) ;
+    if(e != nullptr && f != nullptr){
+      std::queue<Result<Estudiante*,Clase*>*> queue ;
+      this->RedSocial->DFSSeparationGrade(e , f , queue);
+    }else{
+      return -2 ;
+    }
+  }else{
+    return -1 ;
+  }
 }
 #endif

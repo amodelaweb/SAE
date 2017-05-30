@@ -156,7 +156,7 @@ int main(int argc, char const *argv[]) {
       /* CASO GRADOS SEP */
       case 1796:
       if(dd){
-
+        sae.GradosSeparacion("id1" , "id2" , "id3");
       }else{
         std::cout<<bold<<red<<"\n\t - NO SE HA GENERADO EL GRAFO - \n \n";
       }
