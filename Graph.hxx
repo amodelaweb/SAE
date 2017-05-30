@@ -357,6 +357,8 @@ unsigned int Graph<T,E>::DFCount(Vertex<T ,E>* v ){
 template <class T , class E>
 void Graph<T,E>::dijkstra(T begin, T end){
   this->resetValue();
+  this->resetVisited();
+  this->resetEdgeVisited();
   std::priority_queue<Vertex<T ,E>*, std::vector<Vertex<T ,E>*>, VertComparator<T,E>> queue;
   std::multimap<Vertex<T ,E>*, Vertex<T ,E>*> print;
   Vertex<T ,E> *v= this->findVertex(begin);
@@ -463,54 +465,64 @@ int Graph<T,E>::DFSSeparationGrade(unsigned int maxgrade , Vertex<T,E>* beg , Ve
   int min = 999999 ;
   int temphopes ;
   int temp ;
+
   typename std::multimap<Vertex<T,E>* , Edge<E>* > aux2 = beg->GetAdjacents() ;
   beg->setVisited(true);
   for(typename std::multimap<Vertex<T,E>* , Edge<E>* >::iterator it  = aux2.begin() ; it != aux2.end() ; it++){
+    temphopes = hopes  ;
 
     if(!(it->second)->visited && !(it->first)->visited ){
 
       if((it->first) != end ){
         this->rmEdge(beg , (it->first) , (it->second)->data);
       }
+      temp = this->DFSSeparationGrade(maxgrade , (it->first) , end , (temphopes + 1 ) , deque , (it->second));
 
-      temp = this->DFSSeparationGrade(maxgrade , (it->first) , end , hopes++  , deque , (it->second));
+      if(temp != 999999 ){
 
-      if(temp < min ){
-        deque.push_front(new Result<T,E>( beg , edge ));
-        if( min != 999999){
-          do{
-            deque.pop_back();
-          }while(!deque.empty() && deque.back()->v != end );
-
-        }
-        min = temp  ;
-      }else{
-        if(temp != 999999){
-          while(!deque.empty() && deque.front()->v != end){
-            deque.pop_front();
-          }
-          if(!deque.empty()){
-            deque.pop_front();
+        if(temp < min ){
+          if(!(it->first)->visited && !(it->first)->ExistEdge(beg , (it->second)->data)){
+              deque.push_front(new Result<T,E>( beg , edge ));
+            beg->reAddEdge((it->first) , (it->second)->data );
           }
 
+          if( min != 999999){
+            do{
+              deque.pop_back();
+            }while(!deque.empty() && deque.back()->v != end );
+          }
+          min = temp  ;
+        }else{
+          if(temp != 999999){
+            while(!deque.empty() && deque.front()->v != end){
+              deque.pop_front();
+            }
+            if(!deque.empty()){
+              deque.pop_front();
+            }
+          }
         }
       }
+
     }
   }
+
   beg->setVisited(false);
   return min ;
 }
-  //=========================================================================
-  template<class T , class E>
-  int  Graph<T,E>::DFSSeparationGrade(T begin , T end , std::deque<Result<T,E>*> &deque){
-    Vertex<T,E>* a = this->findVertex(begin);
-    Vertex<T,E>* b = this->findVertex(end);
-    if( a != nullptr && b != nullptr){
-      Edge<E>* e = new Edge<E>() ;
-      return this->DFSSeparationGrade(7 , a , b , -1 , deque , e) ;
-    }else{
-      return -1 ;
-    }
+//=========================================================================================
+template<class T , class E>
+int  Graph<T,E>::DFSSeparationGrade(T begin , T end , std::deque<Result<T,E>*> &deque){
+  Vertex<T,E>* a = this->findVertex(begin);
+  Vertex<T,E>* b = this->findVertex(end);
+  this->resetVisited();
+  this->resetEdgeVisited();
+  if( a != nullptr && b != nullptr){
+    Edge<E>* e = new Edge<E>() ;
+    return this->DFSSeparationGrade(7 , a , b , 0 , deque , e) ;
+  }else{
+    return -1 ;
   }
-  //=========================================================================
-  #endif
+}
+//=========================================================================================
+#endif

@@ -37,6 +37,7 @@ int main(int argc, char const *argv[]) {
   char*argv1;
   char*argv2;
   std::string comando ;
+  std::string semestre1 ;
   SAE sae ;
   std::string archivo ;
   bool a = true ;
@@ -141,9 +142,11 @@ int main(int argc, char const *argv[]) {
       case 1045:
       dd = false ;
       if(archivo == " "){
-        dd = sae.makeRedSocial(sae.ultimoSemestre());
+        semestre1 = sae.ultimoSemestre() ;
+        dd = sae.makeRedSocial(semestre1);
         sae.printSocial();
       }else{
+        semestre1 = archivo ;
         dd = sae.makeRedSocial(archivo);
         sae.printSocial();
       }
@@ -156,7 +159,7 @@ int main(int argc, char const *argv[]) {
       /* CASO GRADOS SEP */
       case 1796:
       if(dd){
-        sae.GradosSeparacion("id1" , "id2" , "id3");
+        sae.GradosSeparacion(archivo2 , archivo , semestre1);
       }else{
         std::cout<<bold<<red<<"\n\t - NO SE HA GENERADO EL GRAFO - \n \n";
       }

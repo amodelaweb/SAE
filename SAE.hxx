@@ -893,7 +893,7 @@ bool SAE::makeRedSocial(std::string semestre){
           }
         }
       }
-    }
+  }
     return true ;
   }
   return false ;
@@ -909,8 +909,15 @@ int SAE::GradosSeparacion(std::string id1 ,std::string id2 , std::string idsem){
     Estudiante*  e =aux->VerificarEstudiante2(id1) ;
     Estudiante*  f =aux->VerificarEstudiante2(id2) ;
     if(e != nullptr && f != nullptr){
-      std::queue<Result<Estudiante*,Clase*>*> queue ;
-      this->RedSocial->DFSSeparationGrade(e , f , queue);
+      std::deque<Result<Estudiante*,Clase*>*> deque ;
+      this->RedSocial->dijkstra(e , f);
+      std::cout<<"\n Esto dio "<<this->RedSocial->DFSSeparationGrade(e , f , deque);
+
+      while(!deque.empty()){
+        std::cout<<"\n "<<((deque.front())->v)->GetData();
+        deque.pop_front();
+      }
+      
     }else{
       return -2 ;
     }

@@ -128,8 +128,8 @@ void Vertex<T , E >::rmEdge(Vertex<T , E >* v, E data){
   bool band = false ;
   std::pair <typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator, typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator> ret;
   ret = this->adjacents.equal_range(v);
-  for (typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator it=ret.first; it!=ret.second; ++it){
-    if( !(it->second)->visited && !band && (it->second)->data == data){
+  for (typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator it=ret.first; it!=ret.second ; it++){
+    if( !(it->second)->visited ){
       (it->second)->visited = true ;
       band = true ;
     }
@@ -143,8 +143,8 @@ void Vertex<T , E >::reAddEdge(Vertex<T , E >* v , E data){
   bool band = false ;
   std::pair <typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator, typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator> ret;
   ret = this->adjacents.equal_range(v);
-  for (typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator it=ret.first; it!=ret.second; ++it){
-    if( (it->second)->visited && !band &&  (it->second)->data == data ){
+  for (typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator it=ret.first; it!=ret.second ; it++){
+    if( (it->second)->visited  ){
       (it->second)->visited = false ;
       band = true ;
     }
@@ -219,7 +219,7 @@ bool Vertex<T , E >::ExistEdge(Vertex<T , E>* v , E val){
   std::pair <typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator, typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator> ret;
   ret = this->adjacents.equal_range(v);
   for (typename std::multimap<Vertex<T , E >* , Edge<E>*>::iterator it=ret.first; it!=ret.second && !band; ++it){
-    if( (it->second)->data == val && !band ){
+    if( (it->second)->data == val && !band && !(it->second)->visited){
       band = true ;
     }
   }

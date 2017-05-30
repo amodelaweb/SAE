@@ -60,6 +60,7 @@ public:
     void resetValue();
     void dijkstra(T begin, T end);
     void resetEdgeVisited();
+    
     unsigned int DFCount(Vertex<T ,E>* v ) ;
     int  DFSSeparationGrade(unsigned int maxgrade , Vertex<T,E>* beg , Vertex<T,E>* end , int hopes , std::deque<Result<T,E>*> &deque , Edge<E>* edge );
     int  DFSSeparationGrade(T begin , T end , std::deque<Result<T,E>*> &deque);
