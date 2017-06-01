@@ -411,6 +411,9 @@ int Graph<T,E>::dijkstra(T begin, T end){
       if(!track.empty()){
         std::cout<<"\n    "<<track.top()<<bold2<<blue2<<" Por "<<media.top();
       }
+      if(track.size() == 1){
+        track.pop();
+      }
       media.pop();
     }
   }
