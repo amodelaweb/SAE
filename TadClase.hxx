@@ -167,7 +167,7 @@ std::string Clase::Getidasig() {
 }
 /*=============================================================================================================================*/
 std::ostream& operator << (std::ostream &o, const Clase* e1){
-  return o <<e1->nombreclas <<" , "<<e1->nClase;
+  return o <<bold2<<green2<<e1->nombreclas<<bold2<<white2<<" en la clase "<<bold2<<magenta2<<e1->nClase;
 }
 /*=============================================================================================================================*/
 #endif // __TAD_Sesion_H__

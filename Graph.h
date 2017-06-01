@@ -58,9 +58,9 @@ public:
     unsigned int numberOfConectedComponents(Vertex<T , E>* v1);
     std::set<Vertex<T , E>* , VertComparator<T,E> > GetConectedComponents(Vertex<T , E>* v1);
     void resetValue();
-    void dijkstra(T begin, T end);
+    int dijkstra(T begin, T end);
     void resetEdgeVisited();
-    
+    void WaytoTarget(std::stack<T> q , Vertex<T,E>* beg , std::stack<E> &media );
     unsigned int DFCount(Vertex<T ,E>* v ) ;
     int  DFSSeparationGrade(unsigned int maxgrade , Vertex<T,E>* beg , Vertex<T,E>* end , int hopes , std::deque<Result<T,E>*> &deque , Edge<E>* edge );
     int  DFSSeparationGrade(T begin , T end , std::deque<Result<T,E>*> &deque);

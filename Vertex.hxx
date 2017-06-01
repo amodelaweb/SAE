@@ -226,4 +226,16 @@ bool Vertex<T , E >::ExistEdge(Vertex<T , E>* v , E val){
   return band ;
 }
 //=========================================================================
+template<class T , class E>
+void Vertex<T , E >::getWaytoTarget(Vertex<T,E>* v , std::stack<E> &media){
+  bool band = false ;
+  std::pair <typename std::multimap<Vertex<T,E>* , Edge<E>*>::iterator , typename std::multimap<Vertex<T,E>* , Edge<E>*>::iterator> ret;
+  ret = this->adjacents.equal_range(v);
+  for (typename std::multimap<Vertex<T,E>* , Edge<E>*>::iterator it=ret.first; it!=ret.second && !band; ++it){
+    if( !band ){
+      media.push((it->second)->data);
+    }
+  }
+}
+//=========================================================================
 #endif

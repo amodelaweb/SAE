@@ -89,6 +89,9 @@ bool SAE::RealizarEstuclase(std::vector<std::string> vector1){
       if(vector1[4][vector1[4].size()-1] == '"'){
         vector1[4].erase(vector1[4].size()- 1  , vector1[4].size());
       }
+      if(vector1[4][0] == ' '){
+        vector1[4].erase(0,1);
+      }
       VerificarSemestre(vector1[0])->AgregarEstudiante(idstud , vector1[4] ,vector1[3], vector1[5] , vector1[6] , vector1[7] , vector1[9]  , vector1[1]) ;
     }
     if(VerificarSemestre(vector1[0])->VerificarEstudiante2(idstud) != nullptr){
@@ -910,14 +913,8 @@ int SAE::GradosSeparacion(std::string id1 ,std::string id2 , std::string idsem){
     Estudiante*  f =aux->VerificarEstudiante2(id2) ;
     if(e != nullptr && f != nullptr){
       std::deque<Result<Estudiante*,Clase*>*> deque ;
-      this->RedSocial->dijkstra(e , f);
-      std::cout<<"\n Esto dio "<<this->RedSocial->DFSSeparationGrade(e , f , deque);
+      return this->RedSocial->dijkstra(e , f);
 
-      while(!deque.empty()){
-        std::cout<<"\n "<<((deque.front())->v)->GetData();
-        deque.pop_front();
-      }
-      
     }else{
       return -2 ;
     }

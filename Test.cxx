@@ -36,6 +36,7 @@ int main(int argc, char const *argv[]) {
   char* user_name = getenv("USER");
   char*argv1;
   char*argv2;
+  int zz1 ;
   std::string comando ;
   std::string semestre1 ;
   SAE sae ;
@@ -66,14 +67,17 @@ int main(int argc, char const *argv[]) {
     }
 
     Archivo z(archivo , &sae) ;
-
+    if(!z.archopen() && (comando == "cargar_info_estud" || comando == "cargar_info_asign" || comando == "cargar_info_prerreq")){
+      std::cout<<bold<<red<<"\n\t --- ERROR AL ABRIR EL ARCHIVO --- \n";
+      continue ;
+    }
     switch (str2int(comando)) {
       /* CASO DE LLENAR INFORMAICION SALONES Y CLASES */
       case 1772:
       if(archivo != " " || z.archopen()){
         std::cout<<"\n"<<z.llenarArch()<<std::endl;
       }else{
-        std::cout<<"\n \t --- Nombre de archivo incorrecto ó error abriendo el archivo!! --- " ;
+        std::cout<<"\n \t --- Nombre de archivo incorrecto ó error abriendo el archivo!! --- \n" ;
       }
       break ;
       /* CASO DE LLENAR LA INFORMACION DE ESTUDIANTES E INSCRIPCIONES */
@@ -81,7 +85,7 @@ int main(int argc, char const *argv[]) {
       if(archivo != " " || z.archopen()){
         std::cout<<std::endl<<z.llenarArch2()<<std::endl;
       }else{
-        std::cout<<"\n \t --- Nombre de archivo incorrecto ó error abriendo el archivo!! --- " ;
+        std::cout<<"\n \t --- Nombre de archivo incorrecto ó error abriendo el archivo!! --- \n" ;
       }
       break ;
       /* CASO DE MOSTRAR EL HORARIO DE UN ESTUDIANTE */
@@ -99,7 +103,7 @@ int main(int argc, char const *argv[]) {
         std::cout<<std::endl<<z.llenarprereq();
         prerreq = true ;
       }else{
-        std::cout<<"\n \t --- Nombre de archivo incorrecto ó error abriendo el archivo!! --- " ;
+        std::cout<<"\n \t --- Nombre de archivo incorrecto ó error abriendo el archivo!! --- \n" ;
       }
       break ;
       case 1267:
@@ -114,15 +118,15 @@ int main(int argc, char const *argv[]) {
             std::cout<<"\n \n La asignatura no esta registrada en el sistema ! "<<std::endl;
           }
           if(demandaasign== -2){
-            std::cout<<std::endl<<" El semestre no existe ! " ;
+            std::cout<<std::endl<<" El semestre no existe !  \n" ;
           }
           if(demandaasign == 0){
-            std::cout<<"\n La asignatura no tiene prerrequsitos registrados !"<<std::endl ;
+            std::cout<<"\n La asignatura no tiene prerrequsitos registrados ! \n"<<std::endl ;
           }
         }
       }
       else{
-        std::cout<<"\n \t ===== PRIMERO LLENE LA INFORMACION DE PRE REQUISITOS =====" ;
+        std::cout<<"\n \t ===== PRIMERO LLENE LA INFORMACION DE PRE REQUISITOS ===== \n" ;
       }
       break ;
       /* PROYECTAR SEMESTRES */
@@ -135,7 +139,7 @@ int main(int argc, char const *argv[]) {
         }
       }
       else{
-        std::cout<<"\n \t ===== PRIMERO LLENE LA INFORMACION DE PRE REQUISITOS =====" ;
+        std::cout<<"\n \t ===== PRIMERO LLENE LA INFORMACION DE PRE REQUISITOS ===== \n" ;
       }
       break ;
       /* CASO DE RED SOCIAL */
@@ -144,11 +148,11 @@ int main(int argc, char const *argv[]) {
       if(archivo == " "){
         semestre1 = sae.ultimoSemestre() ;
         dd = sae.makeRedSocial(semestre1);
-        sae.printSocial();
+        //sae.printSocial();
       }else{
         semestre1 = archivo ;
         dd = sae.makeRedSocial(archivo);
-        sae.printSocial();
+        //sae.printSocial();
       }
       if(!dd){
         std::cout<<bold<<red<<"\n\t - NO EXISTE SEMESTRE / NO SE CARGO INFORMACION NECESARIA. - \n \n";
@@ -159,7 +163,25 @@ int main(int argc, char const *argv[]) {
       /* CASO GRADOS SEP */
       case 1796:
       if(dd){
-        sae.GradosSeparacion(archivo2 , archivo , semestre1);
+        zz1 = sae.GradosSeparacion(archivo2 , archivo , semestre1) ;
+        if (zz1 == -1){
+          //SEMESTRE NO EXISTE
+          std::cout<<bold<<red<<"\n\t --- INFORMACION DE SEMESTRE NO FUE CARGADA CORRECTAMENTE --- \n" ;
+        }else if(zz1 == -2){
+          // ALGUNO DE LOS ESTUDIANTES NO EXISTE
+          std::cout<<bold<<red<<"\n\t --- ALGUNO/AMBOS ESTUDIANTE(S) NO SE ENCUENTRA(N) REGISTRADO(S) EN EL SISTEMA --- \n" ;
+        }else if (zz1 == 1 || zz1 == 0 ){
+          // NO EXISTE CONECCION
+          std::cout<<bold<<red<<"\n\t --- NO EXISTE CONECCION ALGUNA ENTRE LOS DOS ALUMNOS --- \n" ;
+        }else if ( zz1 == 2){
+          // CONECCION DIRECCTA
+          std::cout<<bold<<green<<"\n\t --- EXISTE UNA CONECCION DIRECTA ENTRE LOS DOS ESTUDIANTES ---\n" ;
+        }else if(zz1 > 2 && zz1 < 7  ){
+          // CONECCION NORMAL CON MAS DE UNO INTERMEDIO
+          std::cout<<bold<<green<<"\n *) EXISTE UNA CONECCION DE " << zz1 - 2 <<" GRADO(S) DE SEPARACION ENTRE LOS DOS ESTUDIANTES \n" ;
+        }else{
+          std::cout<<bold<<red<<"\n *) EXISTE UNA CONECCION DE " << zz1 - 2 <<" GRADO(S) DE SEPARACION ENTRE LOS DOS ESTUDIANTES , PERO INCOMPLE LA LEY DE LOS 6 GRADOS.\n" ;
+        }
       }else{
         std::cout<<bold<<red<<"\n\t - NO SE HA GENERADO EL GRAFO - \n \n";
       }
@@ -194,8 +216,33 @@ int main(int argc, char const *argv[]) {
       std::cout<<std::endl<<"\t|                      ``:::::::::''                     |";
       std::cout<<std::endl<<"\t|                                                        |";
       std::cout<<std::endl<<"\t|________________________________________________________|";
-      std::cout<<std::endl<<""<<reset<<std::endl<<std::endl;
+      std::cout<<std::endl<<""<<bold<<cyan<<std::endl<<std::endl;
+      std::cout <<std::endl<< R"(
+                                /|         ,
+                              ,///        /|
+                             // //     ,///
+                            // //     // //
+                           // //     || ||
+                           || ||    // //
+                           || ||   // //
+                           || ||  // //
+                           || || || ||
+                           \\,\|,|\_//
+                            \\)\)\\|/
+                            )-."" .-(
+                           //^\` `/^\\
+                          //  |   |  \\
+                        ,/_| 0| _ | 0|_\,
+                      /`    `"=.v.="`    `\
+                     /`    _."{_,_}"._    `\
+                     `/`  ` \  |||  / `  `\`
+                      `",_  \\=^~^=//  _,"`
+                          "=,\'-=-'/,="
+                              '---'
 
+      ESTO FUE TODO POR HOY EN FANTASIAS ANIMADAS DE AYER Y HOY
+)" << '\n';
+std::cout<<std::endl<<""<<reset<<std::endl<<std::endl;
       break ;
       /* CASO DE INSTRUCTIVO */
       case 532:
@@ -318,7 +365,7 @@ int main(int argc, char const *argv[]) {
       break ;
       default :
       std::cout<<std::endl<<"Informacion : "<<comando<<" No existe , por favor tipee ayuda para obtener informacion \n" ;
-      std::cout<<std::endl<<"VALOR NUMERICO : "<<str2int(comando);
+      //std::cout<<std::endl<<"VALOR NUMERICO : "<<str2int(comando);
       break ;
     }
     delete argv1 ;

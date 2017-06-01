@@ -132,9 +132,11 @@ std::string Archivo::separarPalabra2(){
     size_t  pos = lineact.find(",", 0);
     temp = lineact.substr(0, pos);
     lineact.erase(0, pos + 1);
-    if(temp[0] == '"'){
+    if(temp[0] == '"' || temp[0] == ' '){
       temp.erase(0,1);
-      temp.erase(temp.size()-1 , temp.size());
+      if(temp[temp.size()-1] == '"'){
+        temp.erase(temp.size()-1 , temp.size());
+      }
     }
     vector1.push_back(temp);
   }

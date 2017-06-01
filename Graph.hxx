@@ -355,9 +355,10 @@ unsigned int Graph<T,E>::DFCount(Vertex<T ,E>* v ){
 }
 //=========================================================================
 template <class T , class E>
-void Graph<T,E>::dijkstra(T begin, T end){
+int Graph<T,E>::dijkstra(T begin, T end){
   this->resetValue();
   this->resetVisited();
+  int zz1 = 0 ;
   this->resetEdgeVisited();
   std::priority_queue<Vertex<T ,E>*, std::vector<Vertex<T ,E>*>, VertComparator<T,E>> queue;
   std::multimap<Vertex<T ,E>*, Vertex<T ,E>*> print;
@@ -390,13 +391,35 @@ void Graph<T,E>::dijkstra(T begin, T end){
         }
       }
     }
+    this->resetVisited();
+    this->resetEdgeVisited();
+    std::stack<T> track2 = track ;
+    track2.pop();
+    std::stack<E> media1 ;
+    std::stack<E> media ;
+    this->WaytoTarget(track2 ,this->findVertex(track.top()) , media1);
+    while(!media1.empty()){
+      media.push(media1.top());
+      media1.pop();
+    }
+    zz1 = track.size() ;
     while(!track.empty()){
-      std::cout<<track.top()<<", ";
+      if(!media.empty()){
+        std::cout<<bold2<<cyan2<<"\n\n *) "<<track.top()<<bold2<<cyan2<<" Conoce a ";
+      }
       track.pop();
+      if(!track.empty()){
+        std::cout<<"\n    "<<track.top()<<bold2<<blue2<<" Por "<<media.top();
+      }
+      media.pop();
     }
   }
   std::cout<<std::endl;
   this->resetEdgeVisited();
+  if(zz1 < 0 ){
+    zz1 = 0  ;
+  }
+  return zz1 ;
 }
 //=========================================================================
 template<class T , class E>
@@ -525,4 +548,16 @@ int  Graph<T,E>::DFSSeparationGrade(T begin , T end , std::deque<Result<T,E>*> &
   }
 }
 //=========================================================================================
+template<class T , class E>
+void Graph<T,E>::WaytoTarget(std::stack<T> q , Vertex<T,E>* beg , std::stack<E> &media ){
+
+  if(q.empty()){
+    return ;
+  }
+  Vertex<T,E>* aux = this->findVertex(q.top());
+  beg->getWaytoTarget(aux , media);
+  q.pop();
+  this->WaytoTarget(q,aux,media);
+
+}
 #endif

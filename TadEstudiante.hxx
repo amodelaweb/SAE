@@ -66,7 +66,7 @@ bool operator <= (const Estudiante &e1, const Estudiante &e2){
 }
 /*=============================================================================================================================*/
 std::ostream& operator << (std::ostream &o, const Estudiante* e1){
-	return o << e1->idestud ;
+	return o <<bold2<<white2<<" El estudiante "<<bold2<<yellow2<<e1->Nombre<<" "<<e1->Apellido<<bold2<<white2<<" con el id "<<bold2<<red2<<e1->idestud<<bold2<<white2 ;
 }
 /*=============================================================================================================================*/
 #endif

@@ -3,6 +3,7 @@
 
 #include "Graph.h"
 #include <map>
+#include <stack>
 #include <iostream>
 
 
@@ -52,6 +53,7 @@ public:
   bool allAdy();
   std::multimap<Vertex<T , E>*, Edge<E>* > GetAdjacents();
   bool ExistEdge(Vertex<T , E>* v , E val);
+  void getWaytoTarget(Vertex<T,E>* v , std::stack<E> &media);
 //=========================================================================
   template<T , E> friend bool operator == (const Vertex<T , E> &v1, const Vertex<T , E> &v2);
   template<T , E> friend bool operator != (const Vertex<T , E> &v1, const Vertex<T , E> &v2);
